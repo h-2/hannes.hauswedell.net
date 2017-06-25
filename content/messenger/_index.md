@@ -42,65 +42,65 @@ I try to keep this page up-to-date, but if you see that something is outdated or
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">WhatsApp</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 <td class="ce4" style="text-align: center"> ?</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Telegram</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">Yes</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Threema</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">Not on E2EE</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">Not on E2EE</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Signal</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">mostly</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">mostly</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Wire</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">mostly</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">mostly</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Allo</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 <td class="ce4" style="text-align: center"> ?</td>
 </tr>
 <tr class="ro4">
 <td class="ce3" style="text-align: center">Kontalk</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">experimental</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;width: 27. 25mm;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">experimental</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;width: 27. 25mm;color: #000000;background-color: #2aa198">Yes</td>
 <td class="ce4" style="text-align: center"> ?</td>
 </tr>
 </tbody>
@@ -122,59 +122,59 @@ Currently Telegram and Kontalk are trustworthy, although both have drawbacks. Si
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">WhatsApp</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">GCM/APNS only?</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">GCM/APNS only?</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Telegram</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Poll optional</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Poll optional</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Threema</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Poll optional</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No?</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Custom; E-Mail</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Poll optional</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No?</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Custom; E-Mail</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Signal</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">WebSocket optional</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">WebSocket optional</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 <tr class="ro2">
 <td class="ce3" style="text-align: center">Wire</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">WebSocket optional</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">E-Mail</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">WebSocket optional</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">E-Mail</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Allo</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">GCM/APNS only?</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No?</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">GCM/APNS only?</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No?</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 <tr class="ro3">
 <td class="ce3" style="text-align: center">Kontalk</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">partly</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Poll optional</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">JID</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">partly</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Poll optional</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">JID</td>
 </tr>
 </tbody>
 </table>
@@ -197,59 +197,59 @@ Kontalk has some benefits here, although its federation still has limitations, e
 </tr>
 <tr class="ro3">
 <td class="ce6" style="text-align: center">WhatsApp</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
 <td class="ce4" style="text-align: center">?</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
 </tr>
 <tr class="ro3">
 <td class="ce6" style="text-align: center">Telegram</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">Not for E2EE</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">Not for E2EE</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 <tr class="ro3">
 <td class="ce6" style="text-align: center">Threema</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">Experimental</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">Experimental</td>
 <td class="ce4" style="text-align: center">?</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">via plugin</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">via plugin</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 <tr class="ro3">
 <td class="ce6" style="text-align: center">Signal</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f0ff80">limited</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #b58900">limited</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
 </tr>
 <tr class="ro3">
 <td class="ce6" style="text-align: center">Wire</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
 </tr>
 <tr class="ro3">
 <td class="ce6" style="text-align: center">Allo</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 <td class="ce4" style="text-align: center">?</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 <tr class="ro3">
 <td class="ce7" style="text-align: center">Kontalk</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #00b377">Yes</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
-<td style="text-align: center;color: #000000;background-color: #f08682">No</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #2aa198">Yes</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
+<td style="text-align: center;color: #000000;background-color: #dc322f">No</td>
 </tr>
 </tbody>
 </table>
