@@ -113,7 +113,9 @@ nav a.active {
   border-bottom:1px solid #2aa198;
 }
 
-.highlight { background: #002b36;  }
+/* div.highlight { background-color: #073642  } */
+.highlight pre { background-color: #073642  }
+
 .highlight .hll { background-color: #ffffcc }
 .highlight .c { color: #586e75; font-style: italic } /* Comment */
 .highlight .err { color: #dc322f } /* Error */

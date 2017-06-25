@@ -5,6 +5,7 @@ theme = "after-dark"
 
 PygmentsCodeFences = true
 pygmentsuseclasses = true
+pygmentsoptions = "linenos=inline"
 
 [author] 
     name = "Hannes Hauswedell"
