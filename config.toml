@@ -1,0 +1,33 @@
+baseurl = "https://hannes.hauswedell.net"
+languageCode = "en_GB"
+title = "Hannes Hauswedell's homepage"
+theme = "after-dark"
+
+PygmentsCodeFences = true
+pygmentsuseclasses = true
+
+[author] 
+    name = "Hannes Hauswedell"
+    twitter = "__h2__"
+    
+
+[[menu.main]]
+  name = "about"
+  weight = 1
+  identifier = "about"
+  url = "/"
+[[menu.main]]
+  name = "blog"
+  weight = 2
+  identifier = "post"
+  url = "/post/"
+[[menu.main]]
+  name = "messenger_table"
+  weight = 3
+  identifier = "messenger"
+  url = "/messenger/"
+[[menu.main]]
+  name = "contact"
+  weight = 10
+  identifier = "contact"
+  url = "/contact/"
