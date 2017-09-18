@@ -1,0 +1,70 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+#  "THE BEER-WARE LICENSE" (Revision 42):
+#  Hannes Hauswedell wrote this file. As long as you retain this notice you
+#  can do whatever you want with this stuff. If we meet some day, and you think
+#  this stuff is worth it, you can buy me a beer in return.
+# ----------------------------------------------------------------------------
+
+BASEDIR=/your/audio/dir/
+
+IFS='
+'
+
+SOURCEDIRS_BEST='/FILES/_flac/
+/FILES/_vorb/
+/FILES/_other/'
+
+SOURCEDIRS_SMALLEST='/FILES/_flac_vorb/
+/FILES/_vorb/
+/FILES/_other/'
+
+SOURCEDIRS_VORB='/FILES/_flac_vorb/
+/FILES/_vorb/'
+
+
+TARGETDIRS='/LINKS/best/
+/LINKS/smallest/
+/LINKS/vorb/'
+
+
+for TARGETDIR in $TARGETDIRS; do
+    DIRS=""
+    if [ "$TARGETDIR" = "/LINKS/best/" ]; then
+        DIRS=$SOURCEDIRS_BEST;
+    elif [ "$TARGETDIR" = "/LINKS/smallest/" ]; then
+        DIRS=$SOURCEDIRS_SMALLEST;
+    elif [ "$TARGETDIR" = "/LINKS/vorb/" ]; then
+        DIRS=$SOURCEDIRS_VORB;
+    fi
+
+    for INFIX in $DIRS; do
+        echo "Gathering and creating directories for "$TARGETDIR" from " $INFIX " ..."
+        cd ${BASEDIR}${INFIX}
+        for DIR in `find ./ -type d`; do
+            mkdir -p ${BASEDIR}${TARGETDIR}${DIR}
+        done
+
+        echo "Creating symlinks for "$TARGETDIR" from " $INFIX " ..."
+        cd ${BASEDIR}${INFIX}
+        for FILE in `find ./ -type f`; do
+            cd ${BASEDIR}${INFIX}
+            if [ ! -L ${BASEDIR}${TARGETDIR}${FILE} ]; then
+                cd `echo "../../"${TARGETDIR}${FILE} | \
+                    awk -F / '{ print substr($0,0,length($0)-length($NF)-1) }'`
+                    # strip filenamen from full path
+
+                RELPATH=`echo "${FILE}" | awk -F / '{ ORS=""; 
+                                        for (i=1; i < NF+1; ++i) 
+                                            print "../";  }'`${INFIX}${FILE}
+                ln -s ${RELPATH}
+            fi
+        done
+    done
+done
+
+
+
+# TODO: cleanup dead links and remove empty directories. Should be easy.
+
+

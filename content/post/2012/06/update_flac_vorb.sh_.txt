@@ -1,0 +1,39 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+#  "THE BEER-WARE LICENSE" (Revision 42):
+#  Hannes Hauswedell wrote this file. As long as you retain this notice you
+#  can do whatever you want with this stuff. If we meet some day, and you think
+#  this stuff is worth it, you can buy me a beer in return.
+# ----------------------------------------------------------------------------
+
+
+BASEDIR=/your/audio/dir/
+
+IFS='
+'
+
+TARGETDIR="/FILES/_flac_vorb/"
+SOURCEDIR="/FILES/_flac/"
+
+echo "Gathering and creating directories for "$TARGETDIR" from " $INFIX " ..."
+cd ${BASEDIR}${SOURCEDIR}
+for DIR in `find ./ -type d`; do
+    mkdir -p ${BASEDIR}${TARGETDIR}${DIR}
+done
+
+echo "Creating Vorbis files from Flac files..."
+
+for FILE in `find ./ -type f -name "*.flac"`; do
+    TFILE=`echo $FILE | awk '{ ORS=""; print substr($0,0,length($0)-4)}'`"ogg"
+    if [ ! -e ${BASEDIR}${TARGETDIR}${TFILE} ]; then
+        oggenc -o "${BASEDIR}${TARGETDIR}${TFILE}" -q2.5 ${BASEDIR}${SOURCEDIR}${FILE}
+    fi
+done
+
+# TODO: cleanup that vorbis files that don't have a flac file
+#       in case you have spare cpu cycles you can of course just delete
+#       _flac_vorb and recreate.
+
+# TODO: run multiple conversions in parallel
+
+

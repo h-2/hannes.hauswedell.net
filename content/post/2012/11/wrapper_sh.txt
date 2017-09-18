@@ -1,0 +1,36 @@
+#!/bin/sh
+
+## USAGE: ./wrapper.sh "my_command --with-args foobar 2>/dev/null" 4>&1
+
+## * the command will be run as usual, in its own shell
+## * stdout and stderr are preserved (and can be redirected as part of the
+##   command invocation)
+## * the peak resident set memory usage and the total time are printed to FD4,
+##   after the program terminates
+## * FD4 needs to be redirected, e.g. to stdout or an extra file
+
+t=`date +%s`
+
+CMD="LD_PRELOAD=/path/to/libmymemusage.so
+/bin/sh -c # $@ # 3>&1 1>&4 4>&3
+| awk #
+BEGIN { max_ram=0 };
+(§1 == \"[mymemusage]\") && (§2 != \"error:\") { if (§2 > max_ram) max_ram = §2;};
+(§1 == \"[mymemusage]\") && (§2 == \"error:\") { print §0 };
+END { print max_ram }#
+3>&1 1>&4 4>&3 "
+CMD=$(echo $CMD | sed -e "s/\§/\$/g" -e  "s/\#/\'/g")
+## 1) preload a mymemusage library that prints maximum RES-Memory
+## 2) pass all arguments to an extra shell and switch stdout and FD4
+## 3) out of possibly multiple binary file executions get the maximum
+##    memory footprint a binary left
+## 4) switch the field descriptors back
+## 5) replace some symbols in the string with special characters, because
+##    we didnt want them to expand before (quotes and variables)
+
+# echo $CMD
+eval $CMD
+
+t=$((`date +%s`-t))
+
+echo $t >&4
