@@ -1,6 +1,6 @@
 +++
 
-title= "messenger_table"
+title= "Messenger Table"
 
 type = "index"
 +++

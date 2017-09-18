@@ -2,6 +2,7 @@ baseurl = "https://hannes.hauswedell.net"
 languageCode = "en_GB"
 title = "Hannes Hauswedell's homepage"
 theme = "after-dark"
+copyright = "Unless otherwise noted: text is CC-by-sa; inline code is CC0; pictures are GNU GPL"
 
 PygmentsCodeFences = true
 pygmentsuseclasses = true
@@ -12,22 +13,30 @@ pygmentsoptions = "linenos=inline"
     twitter = "__h2__"
 
 [[menu.main]]
-  name = "about"
+  name = "[about]"
   weight = 1
   identifier = "about"
   url = "/"
+
 [[menu.main]]
-  name = "blog"
-  weight = 2
+  name = "[blog posts]"
+  weight = 3
   identifier = "post"
   url = "/post/"
+
 [[menu.main]]
-  name = "messenger_table"
-  weight = 3
+  name = "[blog categories]"
+  weight = 4
+  identifier = "categories"
+  url = "/categories/"
+
+[[menu.main]]
+  name = "[messenger table]"
+  weight = 8
   identifier = "messenger"
   url = "/messenger/"
 [[menu.main]]
-  name = "contact"
+  name = "[contact]"
   weight = 10
   identifier = "contact"
   url = "/contact/"
