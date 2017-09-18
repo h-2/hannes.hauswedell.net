@@ -113,6 +113,8 @@ nav a.active {
   border-bottom:1px solid #2aa198;
 }
 
+
+/* real code blocks */
 /* div.highlight { background-color: #073642  } */
 .highlight pre { background-color: #073642  }
 
@@ -192,3 +194,10 @@ nav a.active {
 .highlight .vi { color: #268bd2 } /* Name.Variable.Instance */
 .highlight .vm { color: #cb4b16 } /* Name.Variable.Magic */
 .highlight .il { color: #2aa198 } /* Literal.Number.Integer.Long */
+
+/* regular pre */
+.hack pre
+{
+    color: #000000;
+    background-color: #073642;
+}

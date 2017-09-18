@@ -7,14 +7,14 @@ type = "index"
 
 On this page I try to shed some light on the jungle of mobile messaging apps out there. I have also written blog articles about this:
 <ul>
-    <li><a title="Secure Texting and why FSFE cares" href="http://blogs.fsfe.org/h2/2014/06/25/secure-texting-and-why-fsfe-cares/" target="_blank">Secure Texting and why FSFE cares</a></li>
-    <li><a title="Secure Texting Part II" href="http://blogs.fsfe.org/h2/2015/02/23/secure-texting-part-ii/" target="_blank">Secure Texting Part II</a></li>
-    <li><a title="Why Privacy is more than Crypto" href="http://blogs.fsfe.org/h2/2016/05/31/why-privacy-is-more-than-crypto/" target="_blank">Why Privacy is more than Crypto</a></li>
+    <li><a title="Secure Texting and why FSFE cares" href="/post/2014/06/25/secure-texting-and-why-fsfe-cares/" target="_blank">Secure Texting and why FSFE cares</a></li>
+    <li><a title="Secure Texting Part II" href="/post/2015/02/23/secure-texting-part-ii/" target="_blank">Secure Texting Part II</a></li>
+    <li><a title="Why Privacy is more than Crypto" href="/post/2016/05/31/why-privacy-is-more-than-crypto/" target="_blank">Why Privacy is more than Crypto</a></li>
 </ul>
 And also some talks:
 <ul>
     <li><a title="https://conf.qtcon.org/en/qtcon/public/events/722" href="https://conf.qtcon.org/en/qtcon/public/events/722" target="_blank">QtCon / FSFEsummit 2016</a></li>
-    <li><a title="https://events.ccc.de/congress/2016/wiki/Session:What_makes_a_secure_mobile_messenger%3F_--_A_comparison_of_WhatsApp_competitors" href="https://events.ccc.de/congress/2016/wiki/Session:What_makes_a_secure_mobile_messenger%3F_--_A_comparison_of_WhatsApp_competitors" target="_blank">33c3 Community sesseoin</a></li>
+    <li><a title="https://events.ccc.de/congress/2016/wiki/Session:What_makes_a_secure_mobile_messenger%3F_--_A_comparison_of_WhatsApp_competitors" href="https://events.ccc.de/congress/2016/wiki/Session:What_makes_a_secure_mobile_messenger%3F_--_A_comparison_of_WhatsApp_competitors" target="_blank">33c3 Community session</a></li>
 </ul>
 I focus solely on applications with automatic contact discovery here, because I want to stay close to the SMS or WhatsApp analogy. While there are valid reasons for choosing messengers with custom identifiers like XMPP (I use and recommend <a title="https://conversations.im/" href="https://conversations.im/" target="_blank">Conversations</a> on Android), the barrier to reaching a large audience is much higher. For more background please see the above links.
 
