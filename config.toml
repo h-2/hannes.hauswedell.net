@@ -7,10 +7,9 @@ PygmentsCodeFences = true
 pygmentsuseclasses = true
 pygmentsoptions = "linenos=inline"
 
-[author] 
+[author]
     name = "Hannes Hauswedell"
     twitter = "__h2__"
-    
 
 [[menu.main]]
   name = "about"

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /_.jpg
+Disallow: /contact/fingerprint1.png
+Disallow: /contact/fingerprint2.png
+Disallow: /contact/fingerprint3.png
