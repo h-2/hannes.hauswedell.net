@@ -8,6 +8,10 @@ PygmentsCodeFences = true
 pygmentsuseclasses = true
 pygmentsoptions = "linenos=inline"
 
+[Params]
+    gh_comment_reponame = "h-2/blog-comments"
+    fsfe_comment_reponame = "h2/blog-comments"
+
 [author]
     name = "Hannes Hauswedell"
     twitter = "__h2__"

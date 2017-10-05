@@ -198,6 +198,6 @@ nav a.active {
 /* regular pre */
 .hack pre
 {
-    color: #000000;
+/*     color: #000000; */
     background-color: #073642;
 }
