@@ -1,43 +1,38 @@
 <div id="comments">
 <br/><br/>
 <!-- <h4>Comments</h4> -->
-{{ if .Params.ghcommentid }}
+{{ if (.Params.gh_commentid) or (.Params.fsfe_commentid) }}
     <!-- <script type="text/javascript" src="{{ .Site.BaseURL }}js/github-comments.js"></script> -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/github-comments.js"></script>
-
-
-    {{ if .Site.Params.fsfe_comment_reponame }}
-    <h4>Comments (via git.fsfe.org)</h4>
-        <a href="javascript:void(0)" id="fsfe-load-comments">Load comments ⤓</a><br>
-        <a href="javascript:void(0)" id="fsfe-load-comments-more" class="btn" style="display:none">Load more comments</a>
-        <a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.ghcommentid }}#new_comment_field" id="fsfe-post-comment" >Post comment</a><br><br>
-
-        <script type="text/javascript">
-            $("#fsfe-load-comments").attr("onclick", "DoGithubComments(\"https://git.fsfe.org/api/v1/repos/" +  {{ .Site.Params.gh_comment_reponame }} + "\"," +
-                                                                       "\"fsfe\", " +
-                                                                       {{ $.Params.ghcommentid }} + ");");
-        </script>
-    {{ end }}
-
-    {{ if .Site.Params.gh_comment_reponame }}
-    <h4>Comments (via GitHub)</h4>
-        <div id="gh-comments-list"></div>
-        <a href="javascript:void(0)" id="gh-load-comments">Load comments ⤓</a><br>
-        <a href="javascript:void(0)" id="gh-load-comments-more" class="btn" style="display:none">Load more comments</a>
-        <a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.ghcommentid }}#new_comment_field" id="gh-post-comment" >Post comment</a><br>
-
-        <script type="text/javascript">
-            $("#gh-load-comments").attr("onclick", "DoGithubComments(\"https://api.github.com/repos/" +  {{ .Site.Params.gh_comment_reponame }} + "\"," +
-                                                                    "\"gh\", " +
-                                                                    {{ $.Params.ghcommentid }} + ");");
-        </script>
-    {{ end }}
-<!--//         $("#gh-load-comments").attr("onclick", "DoGithubComments(\"https://git.fsfe.org/api/v1/repos/" +  {{ .Site.Params.fsfe_comment_reponame }} + "\"," + {{ $.Params.ghcommentid }} + ");");
-
-//         $("#gh-post-comment").attr("href",  "https://github.com/" + repo + "/issues/" + {{ $.Params.ghcommentid }} + "#new_comment_field");
-//         $("#gh-load-comments").hide();
-//         DoGithubComments({{ $.Params.ghcommentid }});-->
-
 {{ end }}
+
+{{ if (.Site.Params.fsfe_comment_reponame) and (.Params.fsfe_commentid) }}
+    <h4>Comments (via git.fsfe.org)</h4>
+    <div id="fsfe-comments-list"></div>
+    <div id="fsfe-load-comments-box"><a href="javascript:void(0)" id="fsfe-load-comments">Load comments ⤓</a><br></div>
+    <a href="javascript:void(0)" id="fsfe-load-comments-more" class="btn" style="display:none">Load more comments</a>
+    <div id="fsfe-post-comment-box"><a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}#new_comment_field" id="fsfe-post-comment" >Post comment</a><br><br>
+
+    <script type="text/javascript">
+        $("#fsfe-load-comments").attr("onclick", "DoGithubComments(\"https://git.fsfe.org/api/v1/repos/" +  {{ .Site.Params.fsfe_comment_reponame }} + "\"," +
+                                                                   "\"fsfe\", " +
+                                                                   {{ $.Params.fsfe_commentid }} + ");");
+    </script>
+{{ end }}
+
+{{ if (.Site.Params.gh_comment_reponame) and (.Params.gh_commentid) }}
+    <h4>Comments (via GitHub)</h4>
+    <div id="gh-comments-list"></div>
+    <div id="gh-load-comments-box"><a href="javascript:void(0)" id="gh-load-comments">Load comments ⤓</a><br></div>
+    <a href="javascript:void(0)" id="gh-load-comments-more" class="btn" style="display:none">Load more comments</a>
+    <div id="gh-post-comment-box"><a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}#new_comment_field" id="gh-post-comment" >Post comment</a><br></div>
+
+    <script type="text/javascript">
+        $("#gh-load-comments").attr("onclick", "DoGithubComments(\"https://api.github.com/repos/" +  {{ .Site.Params.gh_comment_reponame }} + "\"," +
+                                                                 "\"gh\", " +
+                                                                 {{ $.Params.gh_commentid }} + ");");
+    </script>
+{{ end }}
+
 </div>
