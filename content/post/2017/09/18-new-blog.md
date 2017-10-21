@@ -6,6 +6,9 @@ date: 2017-09-18 16:00:00+02:00
 title: New blog
 slug: 18/new-blog
 
+fsfe_commentid: 1
+gh_commentid: 1
+
 categories:
 - Meta
 
