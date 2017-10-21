@@ -1,37 +1,88 @@
 <div id="comments">
 <br/><br/>
-<!-- <h4>Comments</h4> -->
-{{ if (.Params.gh_commentid) or (.Params.fsfe_commentid) }}
-    <!-- <script type="text/javascript" src="{{ .Site.BaseURL }}js/github-comments.js"></script> -->
+{{ if or (.Params.gh_commentid) (.Params.fsfe_commentid) }}
     <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/github-comments.js"></script>
+    <script type="text/javascript" src="/js/hosted-comments.js"></script>
+{{ end }}
+{{ if (.Params.fsfe_commentid) }}
+    <script type="text/javascript" src="/js/showdown.min.js"></script>
 {{ end }}
 
-{{ if (.Site.Params.fsfe_comment_reponame) and (.Params.fsfe_commentid) }}
+
+{{ if and (.Site.Params.fsfe_comment_reponame) (.Params.fsfe_commentid) }}
     <h4>Comments (via git.fsfe.org)</h4>
     <div id="fsfe-comments-list"></div>
-    <div id="fsfe-load-comments-box"><a href="javascript:void(0)" id="fsfe-load-comments">Load comments ⤓</a><br></div>
+    <!--only visible with java-script:-->
+    <div id="fsfe-load-comments-box" style="display:none">
+        <a href="javascript:void(0)" id="fsfe-load-comments">Load comments ⤓</a>
+        <br>
+    </div>
+    <!--only visible with java-script (dynamically added when multiple pages):-->
     <a href="javascript:void(0)" id="fsfe-load-comments-more" class="btn" style="display:none">Load more comments</a>
-    <div id="fsfe-post-comment-box"><a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}#new_comment_field" id="fsfe-post-comment" >Post comment</a><br><br>
+    <!--fallback if no javascript available:-->
+    <div id="fsfe-comments-external-box">
+        <a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}"
+           id="fsfe-comments-external"
+           target="_blank">View comments externally</a>
+        <br>
+    </div>
+    <!--always visible-->
+    <div id="fsfe-post-comment-box">
+        <a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}#new_comment_field"
+           id="fsfe-post-comment"
+           target="_blank">Post comment</a>
+        <br>
+        <br>
+    </div>
 
     <script type="text/javascript">
-        $("#fsfe-load-comments").attr("onclick", "DoGithubComments(\"https://git.fsfe.org/api/v1/repos/" +  {{ .Site.Params.fsfe_comment_reponame }} + "\"," +
-                                                                   "\"fsfe\", " +
-                                                                   {{ $.Params.fsfe_commentid }} + ");");
+        $("#fsfe-load-comments").attr("onclick", "DoHostedComments(\"gitea\"," +
+                                                                  "\"git.fsfe.org\"," +
+                                                                  "\"" + {{ .Site.Params.fsfe_comment_reponame }} + "\"," +
+                                                                  "\"fsfe\", " +
+                                                                  {{ $.Params.fsfe_commentid }} + ");");
+        // show javascript button
+        $("#fsfe-load-comments-box").attr("style", "display:inline");
+        // hide non-javascript-button
+        $("#fsfe-comments-external-box").attr("style", "display:none");
     </script>
 {{ end }}
 
-{{ if (.Site.Params.gh_comment_reponame) and (.Params.gh_commentid) }}
+{{ if and (.Site.Params.gh_comment_reponame) (.Params.gh_commentid) }}
     <h4>Comments (via GitHub)</h4>
     <div id="gh-comments-list"></div>
-    <div id="gh-load-comments-box"><a href="javascript:void(0)" id="gh-load-comments">Load comments ⤓</a><br></div>
+    <!--only visible with java-script:-->
+    <div id="gh-load-comments-box" style="display:none">
+        <a href="javascript:void(0)" id="gh-load-comments">Load comments ⤓</a>
+        <br>
+    </div>
+    <!--only visible with java-script (dynamically added when multiple pages):-->
     <a href="javascript:void(0)" id="gh-load-comments-more" class="btn" style="display:none">Load more comments</a>
-    <div id="gh-post-comment-box"><a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}#new_comment_field" id="gh-post-comment" >Post comment</a><br></div>
+    <!--fallback if no javascript available:-->
+    <div id="gh-comments-external-box">
+        <a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}"
+           id="gh-comments-external"
+           target="_blank">View comments externally</a>
+        <br>
+    </div>
+    <!--always visible-->
+    <div id="gh-post-comment-box">
+        <a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}#new_comment_field"
+           id="gh-post-comment"
+           target="_blank">Post comment</a>
+        <br>
+    </div>
 
     <script type="text/javascript">
-        $("#gh-load-comments").attr("onclick", "DoGithubComments(\"https://api.github.com/repos/" +  {{ .Site.Params.gh_comment_reponame }} + "\"," +
-                                                                 "\"gh\", " +
-                                                                 {{ $.Params.gh_commentid }} + ");");
+        $("#gh-load-comments").attr("onclick", "DoHostedComments(\"github\"," +
+                                                                "\"github.com\"," +
+                                                                "\"" + {{ .Site.Params.gh_comment_reponame }} + "\"," +
+                                                                "\"gh\", " +
+                                                                {{ $.Params.gh_commentid }} + ");");
+        // show javascript button
+        $("#gh-load-comments-box").attr("style", "display:inline");
+        // hide non-javascript-button
+        $("#gh-comments-external-box").attr("style", "display:none");
     </script>
 {{ end }}
 

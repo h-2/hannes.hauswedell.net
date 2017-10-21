@@ -1,5 +1,5 @@
 // Copyright © 2017 Don Williamson
-// small changes Copyright © 2017 Hannes Hauswedell
+// Copyright © 2017 Hannes Hauswedell
 //
 // MIT License
 //
@@ -24,8 +24,6 @@
 // use of ajax vs getJSON for headers use to get markdown (body vs body_htmml)
 // todo: pages, configure issue url, open in new window?
 
-var CurrentPage = 0;
-
 function ParseLinkHeader(link)
 {
     if (link === null)
@@ -45,16 +43,34 @@ function ParseLinkHeader(link)
     return links;
 }
 
-function DoGithubComments(api_url, element_prefix, comment_id, page_id)
+function DoHostedComments(type,             // "github" or "gitea"
+                          site,             // hostname of the instance
+                          repo,             // repository as "user/repo"
+                          element_prefix,   // prefix for elements defined outside (to hide/show)
+                          comment_id,       // number of the issue that is being used
+                          page_id)          // issue page (defaults to 1)
 {
     if (page_id === undefined)
         page_id = 1;
 
-    var api_comments_url = api_url + "/issues/" + comment_id + "/comments" + "?page=" + page_id;
+    if (type === "github")
+    {
+        var api_url = "https://api." + site + "/repos/" + repo + "/issues/" + comment_id + "/comments?page=" + page_id;
+    }
+    else if (type === "gitea")
+    {
+        var api_url = "https://" + site + "/api/v1/repos/" + repo + "/issues/" + comment_id + "/comments?page=" + page_id;
+        var converter = new showdown.Converter();
+        converter.setFlavor('github');
+    }
+    else
+    {
+        // error
+    }
 
     $(document).ready(function ()
     {
-        $.ajax(api_comments_url,
+        $.ajax(api_url,
         {
             headers: {Accept: "application/vnd.github.v3.html+json"},
             dataType: "json",
@@ -68,21 +84,22 @@ function DoGithubComments(api_url, element_prefix, comment_id, page_id)
 
                     var date = new Date(comment.created_at);
 
-                    // gitea doesn't have this:
-                    if (comment.user.html_url == undefined)
-                        comment.user.html_url = "https://git.fsfe.org/" + comment.user.login;
-                    // gitea doesn't have this either:
-                    if (comment.body_html == undefined)
-                        comment.body_html = comment.user.body;
+                    if (type === "gitea")
+                    {
+                        // gitea doesn't have these
+                        comment.user.html_url = "https://" + site + "/" + comment.user.login;
+                        comment.body_html = converter.makeHtml(comment.body);
+                    }
 
-                    var t = "<div id='" + element_prefix + "-comment'>";
+                    var t = "<div id='" + element_prefix + "-comment' >";
                     t += "<img src='" + comment.user.avatar_url + "' width='24px'>";
                     t += "<b><a href='" + comment.user.html_url + "'> " + comment.user.login + "</a></b>";
                     t += " posted at ";
                     t += "<em>" + date.toUTCString() + "</em>";
                     t += "<div id='" + element_prefix + "-comment-hr'></div>";
+                    t += "<div id='commend-body' style='border:1px solid; padding: 8px; margin: 2px'>";
                     t += comment.body_html;
-                    t += "</div>";
+                    t += "</div></div><br>";
                     $("#" + element_prefix + "-comments-list").append(t);
                 });
                 if ($(comments).size() === 0)
@@ -94,7 +111,12 @@ function DoGithubComments(api_url, element_prefix, comment_id, page_id)
                 var links = ParseLinkHeader(jqXHR.getResponseHeader("Link"));
                 if ("next" in links)
                 {
-                    $("#" + element_prefix + "-load-comments-more").attr("onclick", "DoGithubComments(" + repo_name + "," + element_prefix + "," + comment_id + "," + (page_id + 1) + ");");
+                    $("#" + element_prefix + "-load-comments-more").attr("onclick", "DoHostedComments(" + type + ","
+                                                                                                        + site + ","
+                                                                                                        + repo + ","
+                                                                                                        + element_prefix + ","
+                                                                                                        + comment_id + ","
+                                                                                                        + (page_id + 1) + ");");
                     $("#" + element_prefix + "-load-comments-more").show();
                 }
                 else
