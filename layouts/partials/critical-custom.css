@@ -113,6 +113,11 @@ nav a.active {
   border-bottom:1px solid #2aa198;
 }
 
+/* don't make tables fill entire width */
+table {
+    width: unset;
+}
+
 
 /* real code blocks */
 /* div.highlight { background-color: #073642  } */
