@@ -1,13 +1,13 @@
 ---
 
 author: h2
-date: 2017-11-23 12:00:00+02:00
+date: 2017-12-09 18:00:00+02:00
 
 title: The - surprisingly limited - usefulness of function multiversioning in GCC
-slug: 23/fmv
+slug: 09/fmv
 
-fsfe_commentid: 2
-gh_commentid: 2
+fsfe_commentid: 3
+gh_commentid: 3
 
 <!-- draft: true -->
 
@@ -24,6 +24,7 @@ tags:
 - function multi-versioning
 - function-multi-versioning
 - fmv
+- popcount
 
 ---
 
@@ -31,7 +32,7 @@ Modern CPUs have quite a few features that generic amd64/intel64 code cannot mak
 available everywhere and including them would break the code on unsupporting platforms. The solution is to not use
 these features, or ship different specialised binaries for different target CPUs. The problem with the first approach
 is that you miss out on possible optimisations and the problem with the second approach is that most users don't know
-which features their CPUs support, possibly picking a wrong one (which won't run → bad user experience) or a less
+which features their CPUs support, possibly picking a wrong executable (which won't run → bad user experience) or a less
 optimised one (which is again problem 1). **But** there is an elegant GCC-specific alternative: Function multiversioning!
 
 <!--more-->
@@ -52,7 +53,7 @@ But does it really solve our problems? Let's have a closer look!
 Many of the CPU features used in machine-optimised code relate to [SIMD](https://en.wikipedia.org/wiki/SIMD), but for
 our example, I will use a more simple operation: population count or short **popcount**.
 
-The popcount of an integral number is the number if bits that are set to 1 in its bit-representation.
+The popcount of an integral number is the number of bits that are set to 1 in its bit-representation.
 [More details on [Wikipedia](https://en.wikipedia.org/wiki/Hamming_weight) if you are interested.]
 
 Popcounts are used in many algorithms, and are important in bioinformatics (one of the reasons I am writing this post).
@@ -121,7 +122,7 @@ But how much better is this actually? Compile both versions locally and measure,
 A speed-up of 5x, nice!
 
 <center>
-![](/post/2017/11/hurray.jpg)
+![](/post/2017/12/happy.png)
 </center>
 
 But what happens when the binary is run on a CPU that doesn't have builtin popcnt?
@@ -140,19 +141,19 @@ FMV where you just compile the same function body with different optimisation st
 Enough of the talking, here is our adapted example from above:
 
 ```cpp
-#include <cstdint>
+  #include <cstdint>
 
-__attribute__((target_clones("default", "popcnt")))
-uint64_t pc(uint64_t const v)
-{
-    return __builtin_popcountll(v);
-}
+  __attribute__((target_clones("default", "popcnt")))
+  uint64_t pc(uint64_t const v)
+  {
+      return __builtin_popcountll(v);
+  }
 
-int main()
-{
-    for (uint64_t i = 0; i < 1'000'000'000; ++i)
-        volatile uint64_t ret = pc(i);
-}
+  int main()
+  {
+      for (uint64_t i = 0; i < 1'000'000'000; ++i)
+          volatile uint64_t ret = pc(i);
+  }
 ```
 
 <center><a href="https://gcc.godbolt.org/#g:!((g:!((g:!((h:codeEditor,i:(j:1,source:'%23include+%3Ccstdint%3E%0A%0A__attribute__((target_clones(%22default%22,+%22popcnt%22)))%0Auint64_t+pc(uint64_t+const+v)%0A%7B%0A++++return+__builtin_popcountll(v)%3B%0A%7D%0A%0Aint+main()%0A%7B%0A++++for+(uint64_t+i+%3D+0%3B+i+%3C+1!'000!'000!'000%3B+%2B%2Bi)%0A++++++++volatile+uint64_t+ret+%3D+pc(i)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g72,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),libs:!(),options:'-O3',source:1),l:'5',n:'0',o:'x86-64+gcc+7.2+(Editor+%231,+Compiler+%231)',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank">
@@ -188,41 +189,46 @@ fast as possible? Compile and run it!
 Ok, we are faster than the original generic code so we are probably using the optimised popcount call, but
 we are nowhere near our 5x speed-up. What's going on?
 
+<center>
+![](/post/2017/12/hm.png)
+</center>
+
 ## Nested function calls
 
-We have replaced our the core of our computation, the function `pc()` with a dispatcher that chooses the
+We have replaced the core of our computation, the function `pc()` with a dispatcher that chooses the
 best implementation. As noted above this decision happens at run-time (it has to, because we can't know
-beforehand if the target CPU will support native popcount), **and it happens one billion times!**
+beforehand if the target CPU will support native popcount, it's the whole point of the exercise),
+**but now this happens one billion times!**
 
 Wow, this check seems to be more expensive than the actual popcount call. If you write a lot of optimised code, this won't
 be a surprise, decision making at run-time just is very expensive.
 
-What can we do about it? Well, we could decide between generic VS optimised before running our algorithm, instead
+What can we do about it? Well, we could decide between generic VS optimised *before* running our algorithm, instead
 of deciding *in our algorithm* on every iteration:
 
 
 ```cpp
-#include <cstdint>
+  #include <cstdint>
 
-uint64_t pc(uint64_t const v)
-{
-    return __builtin_popcountll(v);
-}
+  uint64_t pc(uint64_t const v)
+  {
+      return __builtin_popcountll(v);
+  }
 
-__attribute__((target_clones("default", "popcnt")))
-void loop()
-{
-    for (uint64_t i = 0; i < 1'000'000'000; ++i)
-        volatile uint64_t ret = pc(i);
-}
+  __attribute__((target_clones("default", "popcnt")))
+  void loop()
+  {
+      for (uint64_t i = 0; i < 1'000'000'000; ++i)
+          volatile uint64_t ret = pc(i);
+  }
 
-int main()
-{
-    loop();
-}
+  int main()
+  {
+      loop();
+  }
 ```
-<center><a href="https://gcc.godbolt.org/#g:!((g:!((g:!((h:codeEditor,i:(j:1,source:'%23include+%3Ciostream%3E%0A%0Atemplate+%3Ctypename+t%3E%0A__attribute__+((noinline))+%0Aauto+pc(t+const+%26+v)%0A%7B%0A++++return+__builtin_popcountll(v)%3B%0A%7D%0A%0Atemplate+%3Ctypename+t%3E%0A__attribute__((target_clones(%22default%22,+%22popcnt%22)))+%0Aauto+pc2(t+const+%26+v)%0A%7B%0A++++return+pc(v)%3B%0A%7D%0A%0Aint+main()%0A%7B%0A++++volatile+uint64_t+val+%3D+6%3B%0A++++std::cout+%3C%3C+pc2(val)%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g72,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),libs:!(),options:'-O3',source:1),l:'5',n:'0',o:'x86-64+gcc+7.2+(Editor+%231,+Compiler+%231)',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank">
-view via compiler explorer</a></center>
+<center><a href="https://gcc.godbolt.org/#g:!((g:!((g:!((h:codeEditor,i:(j:1,source:'%23include+%3Ccstdint%3E%0A%0Auint64_t+pc(uint64_t+const+v)%0A%7B%0A++++return+__builtin_popcountll(v)%3B%0A%7D%0A%0A__attribute__((target_clones(%22default%22,+%22popcnt%22)))%0Avoid+loop()%0A%7B%0A++++for+(uint64_t+i+%3D+0%3B+i+%3C+1!'000!'000!'000%3B+%2B%2Bi)%0A++++++++volatile+uint64_t+ret+%3D+pc(i)%3B%0A%7D%0A%0Aint+main()%0A%7B%0A++++loop()%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g72,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),libs:!(),options:'-O3',source:1),l:'5',n:'0',o:'x86-64+gcc+7.2+(Editor+%231,+Compiler+%231)',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank">
+view in compiler explorer</a></center>
 
 The assembly of this gets a little more messy, but you can follow around the `jmp` instructions or just scan
 the assembly for our above mentioned instructions and you will see that we still have the two versions (although
@@ -242,6 +248,146 @@ Compile the code and measure the time:
 </center>
 
 Hurray, we are back to our original speed-up!
+
+If you expected this, than you likely have dealt with strongly templated code before and also heard
+of [tag-dispatching](https://arne-mertz.de/2016/10/tag-dispatch/), a technique that can be used to translate
+arbitrary run-time decisions to different code-paths beneath which you can treat your run-time decision
+as a compile-time one.
+
+Our simplified callgraph for the above cases looks like this (the dotted line is where the dispatching takes place):
+
+<center>
+![](/post/2017/12/graph.png)
+</center>
+
+In real world code the graph is of course bigger, but it should become obvious that by moving
+the decision making further to the left, the code becomes faster – because we have to decide less
+often –, but also the size of the generated executable becomes larger – because more functions
+are actually compiled. [There are corner cases where the executable being bigger actually results
+in certain things becoming slower, but lets not get into that now.]
+
+Anyway, *I thought* that FMV would be like dispatching a tag down the call-graph, **but it's not!**
+In fact we just got lucky in our above example, because the `pc()` call was inlined.
+[Inlining](https://en.wikipedia.org/wiki/Inline_expansion) means that the function itself is
+optimised away entirely and its code is inserted at the place in the
+calling function where the function call would have been otherwise. **Only because `pc()` is
+inlined, do we actually get the opimisation!**
+
+How do you know? Well you can force GCC to not inline `pc()`:
+
+```cpp
+  #include <cstdint>
+
+  __attribute__((noinline))
+  uint64_t pc(uint64_t const v)
+  {
+      return __builtin_popcountll(v);
+  }
+
+  __attribute__((target_clones("default", "popcnt")))
+  void loop()
+  {
+      for (uint64_t i = 0; i < 1'000'000'000; ++i)
+          volatile uint64_t ret = pc(i);
+  }
+
+  int main()
+  {
+      loop();
+  }
+```
+<center><a href="https://gcc.godbolt.org/#g:!((g:!((g:!((h:codeEditor,i:(j:1,source:'%23include+%3Ccstdint%3E%0A%0A__attribute__((noinline))%0Auint64_t+pc(uint64_t+const+v)%0A%7B%0A++++return+__builtin_popcountll(v)%3B%0A%7D%0A%0A__attribute__((target_clones(%22default%22,+%22popcnt%22)))%0Avoid+loop()%0A%7B%0A++++for+(uint64_t+i+%3D+0%3B+i+%3C+1!'000!'000!'000%3B+%2B%2Bi)%0A++++++++volatile+uint64_t+ret+%3D+pc(i)%3B%0A%7D%0A%0Aint+main()%0A%7B%0A++++loop()%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g72,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),libs:!(),options:'-O3',source:1),l:'5',n:'0',o:'x86-64+gcc+7.2+(Editor+%231,+Compiler+%231)',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank">
+view in compiler explorer</a></center>
+
+Just add the third line to your previous Compiler Explorer window, or open the above link. You can
+see that the optimised `popcnt` call has disappeared from the assembly and `pc()` only
+appears once. So in fact our callgraph is (no optimised `pc()` contained):
+
+<center>
+![](/post/2017/12/graph2.png)
+</center>
+
+But how serious is this, you may ask? Didn't the compiler inline automatically?
+Well, the problem about inlining is, that it is entirely
+up to the compiler whether it inlines a function or not (prefixing the function with `inline`
+does in fact not force it to). The deeper the call-graph gets, the more
+likely it is for the compiler not to inline all the way from the FMV invocation point.
+
+## Trying to save FMV for our use case
+
+<details style='border:1px solid; padding: 2px; margin: 2px'>
+  <summary><i>click to see some more complex but futile attempts</i></summary>
+
+It's possible to force the compiler to use inlining, but it's also non-standard
+and it obviously doesn't work if the called functions are not customisable by us
+(e.g. stable interfaces or external code / a library).
+Furthermore it might not even be desirable to force inline every function / function template,
+because they might be used in other places or with differently typed arguments
+resulting in an even higher increase of executable size.
+
+An alternative to inlining would be to use the original form of FMV where you actually
+have different function bodies and in those add a custom layer of (tag-)dispatching yourself:
+
+```cpp
+  #include <cstdint>
+
+  template <bool is_optimised>
+  __attribute__((noinline))
+  uint64_t pc(uint64_t const v)
+  {
+      return __builtin_popcountll(v);
+  }
+
+  __attribute__((target("default")))
+  void loop()
+  {
+      for (uint64_t i = 0; i < 1'000'000'000; ++i)
+          volatile uint64_t ret = pc<false>(i);
+  }
+
+  __attribute__((target("popcnt")))
+  void loop()
+  {
+      for (uint64_t i = 0; i < 1'000'000'000; ++i)
+          volatile uint64_t ret = pc<true>(i);
+  }
+
+  int main()
+  {
+      loop();
+  }
+```
+
+<center><a href="https://gcc.godbolt.org/#g:!((g:!((g:!((h:codeEditor,i:(j:1,source:'%23include+%3Ccstdint%3E%0A%0Atemplate+%3Cbool+is_optimised%3E%0A__attribute__((noinline))%0Auint64_t+pc(uint64_t+const+v)%0A%7B%0A++++return+__builtin_popcountll(v)%3B%0A%7D%0A%0A__attribute__((target(%22default%22)))%0Avoid+loop()%0A%7B%0A++++for+(uint64_t+i+%3D+0%3B+i+%3C+1!'000!'000!'000%3B+%2B%2Bi)%0A++++++++volatile+uint64_t+ret+%3D+pc%3Cfalse%3E(i)%3B%0A%7D%0A%0A__attribute__((target(%22popcnt%22)))%0Avoid+loop()%0A%7B%0A++++for+(uint64_t+i+%3D+0%3B+i+%3C+1!'000!'000!'000%3B+%2B%2Bi)%0A++++++++volatile+uint64_t+ret+%3D+pc%3Ctrue%3E(i)%3B%0A%7D%0A%0Aint+main()%0A%7B%0A++++loop()%3B%0A%7D'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g72,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),libs:!(),options:'-O1',source:1),l:'5',n:'0',o:'x86-64+gcc+7.2+(Editor+%231,+Compiler+%231)',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4" target="_blank">
+view in compiler explorer</a></center>
+
+In this code example we have turned `pc()` into a function template, customisable by a bool variable. This
+means that two versions of this function can be instantiated. We then also implement the loops separately and
+make each pass a different bool value to `pc()` as a template argument. If you look at the assembly in compiler
+explorer you can see that two functions are created for `pc()`, but unfortunately they both contain the
+unoptimised popcount call¹. This is due to the compiler not knowing/assuming that one of the functions is only called in an
+optimised context. → This method won't solve our problem.
+
+And while it is of course possible to add C++17's `if constexpr` to `pc()` and start hacking custom code into the
+the function depending on the template parameter, it does further complicate the solution moving us further
+and further away from our original goal of a thin dispatching layer.
+
+<small>¹ Since the resulting function bodies are the same they are actually merged into a single one at optimisation levels > 1 (but this
+is independent of our problem).</small>
+</details>
+
+## Summary
+
+* Function multiversioning is a good thing, because it aims to solve an actual problem:
+delivering optimised binary code to users that can't or don't want to build themselves.
+* Unfortunately it does not multiversion the functions called by a versioned function,
+forcing developers to move FMV very close to the intended function call.
+* This has the drawback of invoking the dispatch much more often than theoretically
+needed, possibly incurring a penalty in run-time that might exceed the gain from
+more highly optimised code.
+* It would be great if GCC developers could address this by adding a version of FMV
+that recursively clones the indirectly invoked functions (without further branching),
+as well as providing the machine-aware context to these clones, i.e. the presumed CPU features.
 
 ## Further reading
 
