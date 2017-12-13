@@ -12,9 +12,11 @@ pygmentsoptions = "linenos=inline"
     gh_comment_reponame = "h-2/blog-comments"
     fsfe_comment_reponame = "h2/blog-comments"
 
-[author]
+[Author]
     name = "Hannes Hauswedell"
     twitter = "__h2__"
+    mastodon_instance = "mastodon.social"
+    mastodon_user = "__h2__"
 
 [[menu.main]]
   name = "[about]"

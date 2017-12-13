@@ -1,5 +1,22 @@
 <div id="comments">
 <br/><br/>
+{{ if or (.Params.gh_commentid) (.Params.fsfe_commentid) (.Params.tweetid) (.Params.tootid)}}
+<h1>Interact</h1>
+{{ end }}
+
+{{ if (.Params.tootid) }}
+<a href="https://{{ .Site.Author.mastodon_instance }}/@{{ .Site.Author.mastodon_user }}/{{ $.Params.tootid }}" target="_blank">
+💬, ❤ or ♺ on Mastodon
+</a><br>
+{{ end }}
+
+{{ if (.Params.tweetid) }}
+<a href="https://twitter.com/{{ .Site.Author.twitter }}/status/{{ $.Params.tweetid }}" target="_blank">
+💬, ❤ or ♺ on Twitter
+</a><br>
+{{ end }}
+<br>
+
 {{ if or (.Params.gh_commentid) (.Params.fsfe_commentid) }}
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/hosted-comments.js"></script>
@@ -10,7 +27,7 @@
 
 
 {{ if and (.Site.Params.fsfe_comment_reponame) (.Params.fsfe_commentid) }}
-    <h4>Comments (via git.fsfe.org)</h4>
+    <h2>Comments (via git.fsfe.org)</h2>
     <div id="fsfe-comments-list"></div>
     <!--only visible with java-script:-->
     <div id="fsfe-load-comments-box" style="display:none">
@@ -49,7 +66,7 @@
 {{ end }}
 
 {{ if and (.Site.Params.gh_comment_reponame) (.Params.gh_commentid) }}
-    <h4>Comments (via GitHub)</h4>
+    <h2>Comments (via GitHub)</h2>
     <div id="gh-comments-list"></div>
     <!--only visible with java-script:-->
     <div id="gh-load-comments-box" style="display:none">
