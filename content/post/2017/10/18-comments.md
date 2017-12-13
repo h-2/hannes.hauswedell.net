@@ -8,12 +8,18 @@ slug: 21/blog-comments
 
 fsfe_commentid: 1
 gh_commentid: 1
-
-<!-- draft: true -->
+tweetid: 921794092207689728
 
 categories:
 - Meta
 - Random Nerdiness
+
+tags:
+- blog comments
+- GoHugo
+- GitHub
+- Gitea
+- Disqus
 
 ---
 

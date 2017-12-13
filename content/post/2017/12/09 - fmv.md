@@ -8,6 +8,8 @@ slug: 09/fmv
 
 fsfe_commentid: 3
 gh_commentid: 3
+tweetid: 940600556451717126
+tootid: 99166608238390890
 
 <!-- draft: true -->
 
