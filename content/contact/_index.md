@@ -11,10 +11,10 @@ The easiest way is just to write to me:
 
 <small>
 
-| address                                                                   | encryption | fingerprint                                                      | public key               |
-|---------------------------------------------------------------------------|------------|------------------------------------------------------------------|--------------------------|
-| [h2()fsfe.org](mailto:h2()fsfe.org)                                       | PGP        |                                                                  |                          |
-| [hannes.hauswedell()fu-berlin.de](mailto:hannes.hauswedell()fu-berlin.de) | S/MIME     |                                                                  |                          |
+| address                                                                   | encryption | fingerprint                                        | public key                                   |
+|---------------------------------------------------------------------------|------------|----------------------------------------------------|----------------------------------------------|
+| [h2()fsfe.org](mailto:h2()fsfe.org)                                       | PGP        | EF56 F66A A683 3E32 CE05 3F55 6F9F 2E30 ECB3 7977  | [link](/hannes_hauswedell_public_key.asc) |
+| [hannes.hauswedell()fu-berlin.de](mailto:hannes.hauswedell()fu-berlin.de) | S/MIME     |                                                    |                                              |
 
 </small>
 
@@ -49,4 +49,4 @@ As required by German law:
 
 Hannes Hauswedell<br>
 Takustraße 9<br>
-14195 Berlin 
+14195 Berlin
