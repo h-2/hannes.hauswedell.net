@@ -4,9 +4,12 @@ title = "Hannes Hauswedell's homepage"
 theme = "after-dark"
 copyright = "Unless otherwise noted: text is CC-by-sa; inline code is CC0; pictures are GNU GPL"
 
+PygmentsUseClassic = true
 PygmentsCodeFences = true
-pygmentsuseclasses = true
-pygmentsoptions = "linenos=inline"
+PygmentsUseClasses = true
+PygmentsOptions = "linenos=inline"
+
+footnoteReturnLinkContents = "↩"
 
 [Params]
     gh_comment_reponame = "h-2/blog-comments"
