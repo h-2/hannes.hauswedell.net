@@ -118,7 +118,7 @@ struct add_constant_fn
 namespace view
 {
 
-add_constant_fn const add_constant;
+add_constant_fn constexpr add_constant;
 
 }
 

@@ -29,6 +29,8 @@ tags:
 
 ---
 
+<!-- TODO: checks TODOs, add more links, especially to concepts -->
+
 C++17 was officially released last year and the work on C++20 quickly took off.
 A subset of the Concepts TS was merged and the first part of the Ranges TS has been accepted, too.
 Currently the next part of the Ranges TS is under review:
@@ -84,6 +86,9 @@ If you are lost already, I recommend you check out some of the following resourc
 
 The following sections assume you have a basic understanding of what a view does and have at least tried some of the toy examples yourself.
 
+DISCLAIMER: Although I have been working with views and range-v3 for a while now, I am surprised by things again and again.
+If you think I missed something important in this article I would really appreciate feedback!
+
 In general this post is aimed at interested intermediate C++ programmers, I try to be verbose with explanations and also provide many links for
 further reading.
 
@@ -130,10 +135,10 @@ So the *recommended solution* to the task is to just re-use `ranges::view::trans
 
  namespace view
  {
- auto inline const add_constant = ranges::view::transform([] (uint64_t const in)
- {
-    return in + 42;
- });
+ auto const add_constant = ranges::view::transform([] (uint64_t const in)
+                                                   {
+                                                      return in + 42;
+                                                   });
  }
 
  int main()
@@ -194,9 +199,8 @@ using range_reference_t = decltype(*begin(std::declval<t &>()));
 code you will want to select concrete headers and not "all".
 * The `iterator_t` metafunction retrieves the iterator type from a range by checking the return type of `begin()`.
 * The `range_reference_t` metafunction retrieves the reference type of a range which is what you get when
-dereferencing the iterator. It is only needed in the concept checks. [If you are confused that we are dealing with
-the "reference type" and not the "value type", remember that member functions like `at()` and `operator[]` on plain
-old containers also always return the `::reference` type.]
+dereferencing the iterator. It is only needed in the concept checks. [^1]
+[^1]: If you are confused that we are dealing with the "reference type" and not the "value type", remember that member functions like `at()` and `operator[]` on plain old containers also always return the `::reference` type.
 * Both of these functions are defined in the range-v3 library, as well, but I have given minimal definitions here
 to show that we are not relying on any sophisticated magic somewhere else.
 
@@ -237,7 +241,8 @@ but depending on the actual specialisation of the class template, `urng_t` may a
 * Why do we put the member variables inside an extra data structure stored in a smart pointer? A requirement of views
 is that they be copy-able in constant time, e.g. there should be no expensive operations like allocations during copying.
 An easy and good way to achieve implicit sharing of the data members is to put them inside a `shared_ptr`.
-Thereby all copies share the data_members and they get deleted with the last copy.
+Thereby all copies share the data_members and they get deleted with the last copy. [^2]
+[^2]: This is slightly different than in range-v3 where views only accept temporaries of other views, not of e.g. containers (containers can only be given as lvalue-references). This enables constant time copying of the view even without implicit sharing of the underlying range, but it mandates a rather complicated set of techniques to tell apart views from other ranges (the time complexity of a function is not encoded in the language so tricks like inheriting ranges::view are used).
 * In cases where we only hold a reference, this is not strictly required, but in those cases we still benefit from the
 fact that storing the reference inside the smart pointer makes our view default-constructible. This is another
 requirement of views – and having a top-level reference member prevents this. [Of course you can use a top-level
@@ -305,15 +310,9 @@ The value type would then be the reference type with any references stripped
 (`using value_type = std::remove_cv_t<std::remove_reference_t<reference>>;`).
 * The iterator type is just the type we defined above.
 * In general views are not required to be const-iterable, but if they are the `const_iterator` is the same as the `iterator` and
-`const_reference` is the same as `reference`.
-<details style='border:1px solid; padding: 2px; margin: 2px'>
-  <summary><i>less important explanation</i></summary>
-This might be confusing to wrap your head around, but remember that the `const_iterator` of a container is like an iterator over
-the `const` version of that container. The same is true for views, except that since the view does not own the elements its own
-const-ness **does not "protect" the elements from being written to.**
-Ranges behave similar to iterators in this regard, an `iterator const` on a vector can also be used to write to the value it points
-to.
-</details>
+`const_reference` is the same as `reference`. [^3]
+
+[^3]: This might be confusing to wrap your head around, but remember that the `const_iterator` of a container is like an iterator over the `const` version of that container. The same is true for views, except that since the view does not own the elements its own const-ness **does not "protect" the elements from being written to. **Ranges behave similar to iterators in this regard, an `iterator const` on a vector can also be used to write to the value it points to.
 
 ```cpp
     /* constructors and deconstructors */
@@ -331,6 +330,7 @@ to.
 * The constructors are pretty much standard. We have an extra constructor that initialises our urange from the value passed in.
 Note that this constructor covers all cases of input types (`&`, `const &`, `&&`), because more attributes can be stuck in the
 actual `urng_t` and because of [reference collapsing](http://en.cppreference.com/w/cpp/language/reference).
+
 ```cpp
     /* begin and end */
     iterator begin() const
@@ -386,7 +386,7 @@ likely candidate is your iterator not meeting the InputIterator concept.
 
 ## `add_constant_fn`
 
-Off to our second type definition, remember that this is the adaptor definition:
+Off to our second type definition, the functor/adaptor type:
 
 ```cpp
 struct add_constant_fn
@@ -413,6 +413,7 @@ struct add_constant_fn
 the so called function-style: `auto v = view::add_constant(other_range);`.
 * The second operator enables the pipe notation: `auto v = other_range | view::add_constant;`. It needs to be
 `friend` or a free function and takes two arguments (both sides of the operation).
+* Both operators simply delegate to the constructor of `view_add_constant`.
 
 ## `view::add_constant`
 
@@ -425,3 +426,23 @@ add_constant_fn constexpr add_constant;
 
 }
 ```
+
+Since the adapter has no state (in contrast to the view it generates), we can make it `constexpr`. You can now use
+the adaptor in the above example.
+
+Here is the full code: [view_add_constant.cpp](../../view_add_constant.cpp)
+
+# Post scriptum
+
+I will follow up on this with a second tutorial, it will cover writing a view that takes arguments, i.e.
+
+```cpp
+std::vector<uint64_t> in{1, 4, 6, 89, 56, 45, 7};
+auto v = in | view::add_number(42);
+// decide this at run-time     ^
+```
+
+If you found mistakes (of which I am sure there are some) or if you have questions, please comment below via GitHub, Gitea, Twitter
+or Mastodon!
+
+
