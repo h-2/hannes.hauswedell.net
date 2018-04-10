@@ -17,7 +17,7 @@
  *     #eee8d5
  *     base3
  *     #fdf6e3
- * 
+ *
  *     yellow
  *     #b58900
  *     orange
@@ -34,7 +34,7 @@
  *     #2aa198
  *     green
  *     #859900
- * 
+ *
  */
 
 html {
@@ -118,6 +118,13 @@ table {
     width: unset;
 }
 
+.footnotes {
+    font-size: x-small
+}
+
+.footnotes code {
+    font-size: x-small
+}
 
 /* real code blocks */
 /* div.highlight { background-color: #073642  } */
@@ -206,3 +213,4 @@ table {
 /*     color: #000000; */
     background-color: #073642;
 }
+
