@@ -1,17 +1,16 @@
 #include <range/v3/all.hpp>
-#include <range/v3/view/take.hpp>
 #include <iostream>
 
 template <typename t>
 using iterator_t = decltype(begin(std::declval<t &>()));
 
-// template <typename t>
-// using range_reference_t = decltype(*begin(std::declval<t &>()));
+template <typename t>
+using range_reference_t = decltype(*begin(std::declval<t &>()));
 
 template <typename urng_t>
-//     requires (bool)ranges::InputRange<std::decay_t<urng_t>>() &&
-//              std::is_same_v<std::decay_t<range_reference_t<std::decay_t<urng_t>>>, uint64_t>
-class view_add_constant //: public ranges::view_base
+//     requires (bool)ranges::InputRange<urng_t>() &&
+//              (bool)ranges::CommonReference<range_reference_t<urng_t>, uint64_t>()
+class view_add_constant : public ranges::view_base
 {
 private:
     /* data members == "the state" */
@@ -89,8 +88,8 @@ public:
 };
 
 template <typename urng_t>
-//     requires (bool)ranges::InputRange<std::decay_t<urng_t>>() &&
-//              std::is_same_v<std::decay_t<range_reference_t<std::decay_t<urng_t>>>, uint64_t>
+//     requires (bool)ranges::InputRange<urng_t>() &&
+//              (bool)ranges::CommonReference<range_reference_t<urng_t>, uint64_t>()
 view_add_constant(urng_t &&) -> view_add_constant<urng_t>;
 
 static_assert((bool)ranges::InputRange<view_add_constant<std::vector<uint64_t>>>());
@@ -99,16 +98,16 @@ static_assert((bool)ranges::View<view_add_constant<std::vector<uint64_t>>>());
 struct add_constant_fn
 {
     template <typename urng_t>
-//         requires (bool)ranges::InputRange<std::decay_t<urng_t>>() &&
-//                  std::is_same_v<std::decay_t<range_reference_t<std::decay_t<urng_t>>>, uint64_t>
+//         requires (bool)ranges::InputRange<urng_t>() &&
+//                  (bool)ranges::CommonReference<range_reference_t<urng_t>, uint64_t>()
     auto operator()(urng_t && urange) const
     {
         return view_add_constant{std::forward<urng_t>(urange)};
     }
 
     template <typename urng_t>
-//         requires (bool)ranges::InputRange<std::decay_t<urng_t>>() &&
-//                  std::is_same_v<std::decay_t<range_reference_t<std::decay_t<urng_t>>>, uint64_t>
+//         requires (bool)ranges::InputRange<urng_t>() &&
+//                  (bool)ranges::CommonReference<range_reference_t<urng_t>, uint64_t>()
     friend auto operator|(urng_t && urange, add_constant_fn const &)
     {
         return view_add_constant{std::forward<urng_t>(urange)};
