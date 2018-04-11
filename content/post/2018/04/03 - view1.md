@@ -1,15 +1,15 @@
 ---
 
 author: h2
-date: 2018-04-04 10:00:00+02:00
+date: 2018-04-11 13:45:00+02:00
 
 title: "Tutorial: Writing your first view from scratch (C++20 / P0789)"
-slug: 03/view1
+slug: 11/view1
 
 fsfe_commentid: 4
 gh_commentid: 4
-tweetid:
-tootid:
+tweetid: 984047100441825282
+tootid: 99840829295499039
 
 <!-- draft: true -->
 
@@ -29,8 +29,6 @@ tags:
 
 ---
 
-<!-- TODO: checks TODOs, add more links, especially to concepts -->
-
 C++17 was officially released last year and the work on C++20 quickly took off.
 A subset of the Concepts TS was merged and the first part of the Ranges TS has been accepted, too.
 Currently the next part of the Ranges TS is under review:
@@ -45,7 +43,8 @@ This is the first in a series of blog posts describing complete view implementat
 # Introduction (skip this if you have used views before)
 
 Ranges are an abstraction of "a collection of items", or "something iterable".
-The most basic definition requires only the existence of begin() and end(), their comparability and begin being incrementable,
+[The most basic definition](http://en.cppreference.com/w/cpp/experimental/ranges/range/Range) requires only the
+existence of begin() and end(), their comparability and begin being incrementable,
 but more refined range concepts add more requirements.
 
 The ranges most commonly known are containers, e.g. std::vector.
@@ -65,14 +64,15 @@ and then apply a view that drops the first two elements:
 ```cpp
  std::vector<int> vec{1, 5, 6, 8, 5};
  auto v = vec | view::transform([] (int const i) { return i*i; }) | view::drop(2);
- std::cout << *v.begin() << '\n'; // prints '36'
+ std::cout << *std::begin(v) << '\n'; // prints '36'
 ```
 
 And the point here is that only one "squaring-operation" actually happens and that it happens when we dereference the iterator,
 not before (because of lazy evaluation!).
 
 What type is `v`?  It is some implementation defined type that is guaranteed to satisfy certain range concepts:
-the input-range concept (it is iterable and readable) and the view concept.
+the [View concept](http://en.cppreference.com/w/cpp/experimental/ranges/range/View) and the
+[InputRange concept](http://en.cppreference.com/w/cpp/experimental/ranges/range/InputRange).
 The view concept has some important requirements, among them that the type is "light-weight",
 i.e. copy'able in constant time. So while views *appear* like containers, they behave more like iterators.
 
@@ -116,12 +116,12 @@ i.e. we want the following to work:
 
      for (auto && i : in | view::add_constant)
          std::cout << i << ' ';
-     std::cout << '\n'; // should print: 43 47 64 131 98 87 49
+     std::cout << '\n'; // should print: 43 46 48 131 98 87 49
 
      // combine it with other views:
      for (auto && i : in | view::add_constant | ranges::view::take(3))
          std::cout << i << ' ';
-     std::cout << '\n'; // should print: 43 47 64
+     std::cout << '\n'; // should print: 43 46 48
  }
 ```
 
@@ -170,11 +170,11 @@ So in this post we will develop a view that does not depend on range-v3, especia
 
 What is commonly referred to as a view usually consists of multiple entities:
 
-  1. the actual class (template) that meets the requirements of the View concept and at least also InputRange concept;
+  1. the actual class (template) that meets the requirements of the [View concept](http://en.cppreference.com/w/cpp/experimental/ranges/range/View) and at least also [InputRange concept](http://en.cppreference.com/w/cpp/experimental/ranges/range/InputRange);
   by convention of the range-v3 library it is called `view_foo` for the hypothetical view "foo".
-  2. an adaptor type that overloads the `()` and `|` operators that facilitate the "piping" capabilities and *return an instance of 1.*;
+  2. an adaptor type which overloads the `()` and `|` operators that facilitate the "piping" capabilities and *return an instance of 1.*;
   by convention of range-v3 it is called `foo_fn`.
-  3. an instance of the adaptor class that is the only actual user-facing part of the view;
+  3. an instance of the adaptor class that is the only user-facing part of the view;
   by convention of range-v3 it is called `foo`, in the namespace `view`, i.e. `view::foo`.
 
 If the view you are creating is just a combination of existing views, you may not need to implement 1. or even 2.,
@@ -189,10 +189,10 @@ but we will go through all parts now.
 #include <iostream>
 
 template <typename t>
-using iterator_t = decltype(begin(std::declval<t &>()));
+using iterator_t = decltype(std::begin(std::declval<t &>()));
 
 template <typename t>
-using range_reference_t = decltype(*begin(std::declval<t &>()));
+using range_reference_t = decltype(*std::begin(std::declval<t &>()));
 ```
 
 * As mentionend previously, including range-v3 is optional, we only use it for concept checks – and in production
@@ -218,10 +218,11 @@ class view_add_constant : public ranges::view_base
 * `view_add_constant` is a class template, because it needs to hold a reference to the underlying range it operates on;
 that range's type `urng_t` is passed in a as template parameter.
 * If you use GCC, you can add `-fconcepts` and uncomment the requires-block. It enforces certain constraints
-on `urng_t`, the most basic constraint being that it is an input range.
-The second constraint is that the input range is actually a range over `uint64_t` (possibly with reference or `const`).
+on `urng_t`, the most basic constraint being that it is an [InputRange](http://en.cppreference.com/w/cpp/experimental/ranges/range/InputRange).
+The second constraint is that the underlying range is actually a range over `uint64_t` (possibly with reference or `const`).
 * *Please note* that these constraints are specific to the view we are just creating. Other views will have different requirements
-on the reference type or even the range itself (e.g. it could be required to satisfy `RandomAccessRange`).
+on the reference type or even the range itself (e.g. it could be required to satisfy
+[RandomAccessRange](http://en.cppreference.com/w/cpp/experimental/ranges/range/RandomAccessRange)).
 * We inherit from `view_base` which is an empty base class, because being derived from it signals to some library checks that this
 class is really trying to be a view (which is otherwise difficult to detect sometimes); in our example we could also
 omit it.
@@ -242,7 +243,7 @@ but depending on the actual specialisation of the class template, `urng_t` may a
 is that they be copy-able in constant time, e.g. there should be no expensive operations like allocations during copying.
 An easy and good way to achieve implicit sharing of the data members is to put them inside a `shared_ptr`.
 Thereby all copies share the data_members and they get deleted with the last copy. [^2]
-[^2]: This is slightly different than in range-v3 where views only accept temporaries of other views, not of e.g. containers (containers can only be given as lvalue-references). This enables constant time copying of the view even without implicit sharing of the underlying range, but it mandates a rather complicated set of techniques to tell apart views from other ranges (the time complexity of a function is not encoded in the language so tricks like inheriting ranges::view are used).
+[^2]: This is slightly different than in range-v3 where views only accept temporaries of other views, not of e.g. containers (containers can only be given as lvalue-references). This enables constant time copying of the view even without implicit sharing of the underlying range, but it mandates a rather complicated set of techniques to tell apart views from other ranges (the time complexity of a function is not encoded in the language so tricks like inheriting ranges::view are used). I find the design used here more flexible and robust.
 * In cases where we only hold a reference, this is not strictly required, but in those cases we still benefit from the
 fact that storing the reference inside the smart pointer makes our view default-constructible. This is another
 requirement of views – and having a top-level reference member prevents this. [Of course you can use a top-level
@@ -254,6 +255,7 @@ pointer instead of a reference, but we don't like raw pointers anymore!]
     struct iterator_type : iterator_t<urng_t>
     {
         using base = iterator_t<urng_t>;
+        using reference = uint64_t;
 
         iterator_type() = default;
         iterator_type(base const & b) : base{b} {}
@@ -269,7 +271,7 @@ pointer instead of a reference, but we don't like raw pointers anymore!]
             return (*this);
         }
 
-        uint64_t operator*() const
+        reference operator*() const
         {
             return *static_cast<base>(*this) + 42;
         }
@@ -278,10 +280,12 @@ pointer instead of a reference, but we don't like raw pointers anymore!]
 
 * Next we define an iterator type. Since `view_add_constant` needs to satisfy basic range requirements,
 you need to be able to iterate over it. In our case we can stay close to the original and inherit from the original iterator.
-* For the iterator to satisfy the InputIterator concept we need to overload the increment operators so that their return type is of our class
+* For the iterator to satisfy the
+[InputIterator concept](http://en.cppreference.com/w/cpp/experimental/ranges/iterator/InputIterator) we need to
+overload the increment operators so that their return type is of our class
 and not the base class. The important overload is that of the dereference operation, i.e. actually getting the value.
 This is the place where we interject and call the base class's dereference, but then add the constant 42.
-Note that this changes the return type of the operation (`reference_t`); it used to be `uint64_t &`
+Note that this changes the return type of the operation (`::reference`); it used to be `uint64_t &`
 (possibly `uint64_t const &`), now it's `uint64_t` → A new value is always generated as the result of adding `42`.
 * *Note* that more complex views might require drastically more complex iterators and it might make sense to define those externally.
 In general iterators involve a lot of [boilerplate code](https://en.wikipedia.org/wiki/Boilerplate_code), depending on the scope of your
@@ -304,7 +308,9 @@ public:
 over `uint64_t` and we are just adding a number. As we mentioned above, our iterator will always generate new values when dereferenced
 so the reference types are also value types.
 * *Note:* Other view implementation might be agnostic of the actual value type, e.g. a view that reverses the elements can do so
-independent of the type. AND views might also satisfy OutputRange, i.e. they allow writing to the underlying range by passing
+independent of the type. AND views might also satisfy
+[OutputRange](http://en.cppreference.com/w/cpp/experimental/ranges/range/OutputRange), i.e. they allow writing to the
+underlying range by passing
 through the reference. To achieve this behaviour you would write `using reference = range_reference_t<urng_t>;`.
 The value type would then be the reference type with any references stripped
 (`using value_type = std::remove_cv_t<std::remove_reference_t<reference>>;`).
@@ -312,7 +318,7 @@ The value type would then be the reference type with any references stripped
 * In general views are not required to be const-iterable, but if they are the `const_iterator` is the same as the `iterator` and
 `const_reference` is the same as `reference`. [^3]
 
-[^3]: This might be confusing to wrap your head around, but remember that the `const_iterator` of a container is like an iterator over the `const` version of that container. The same is true for views, except that since the view does not own the elements its own const-ness **does not "protect" the elements from being written to. **Ranges behave similar to iterators in this regard, an `iterator const` on a vector can also be used to write to the value it points to.
+[^3]: This might be confusing to wrap your head around, but remember that the `const_iterator` of a container is like an iterator over the `const` version of that container. The same is true for views, except that since the view does not own the elements its own const-ness **does not "protect" the elements from being written to.** Ranges behave similar to iterators in this regard, an `iterator const` on a vector can also be used to write to the value it points to. More on this in [this range-v3 issue](https://github.com/ericniebler/range-v3/issues/385).
 
 ```cpp
     /* constructors and deconstructors */
@@ -353,11 +359,21 @@ actual `urng_t` and because of [reference collapsing](http://en.cppreference.com
     }
 };
 ```
-* Finally we add begin and end iterators. Our iterator type can be created from the underlying iterator type, because
-we added a constructor above. And, as noted above, the `const` and non-`const` versions are the same.
-* TODO above is wrong
-* *Note* that if you want your view to be stronger that an InputRange, e.g. also be a SizedRange or even a
-RandomAccessRange, you might want to define additional member types (`size_type`, `difference_type`) and additional
+* Finally we add `begin()` and `end()`. Since we added a constructor for this above, we can create our view's iterator
+from the underlying range's iterator implicitly when returning from `begin()`.
+* For some ranges the sentinel type (the type returned by `end()`) is not the same as the type returned by `begin()`,
+this is only true for [BoundedRanges](http://en.cppreference.com/w/cpp/experimental/ranges/range/BoundedRange);
+the only requirement is that the types are comparable with `==` and `!=`.
+We need to take this into account here, that's why the end function returns `auto` and not the iterator
+(the underlying sentinel is still comparable with our new iterator, because it inherits from the underlying range's
+iterator).
+* As noted above, some views may not be const-iterable, in that case you can omit `cbegin()` and `cend()` and not
+mark `begin()` and `end()` as `const`.
+* *Note* that if you want your view to be stronger that an
+[InputRange](http://en.cppreference.com/w/cpp/experimental/ranges/range/InputRange), e.g. also be a
+[SizedRange](http://en.cppreference.com/w/cpp/experimental/ranges/range/SizedRange) or even a
+[RandomAccessRange](http://en.cppreference.com/w/cpp/experimental/ranges/range/RandomAccessRange),
+you might want to define additional member types (`size_type`, `difference_type`) and additional
 member functions (`size()`, `operator[]`...). *Although strictly speaking the range "traits" are now deduced completely
 from the range's iterator so you don't *need* additional member functions on the range.*
 
@@ -382,7 +398,9 @@ without the Concepts TS or C++20. We have picked `std::vector<uint64_t>` as an u
 * If the checks fail, you have done something wrong somewhere. The compilers don't yet tell you why certain concept
 checks fail (especially when using the range library's hacked concept implementation) so you need to add more basic
 concept checks and try which ones succeed and which break to get hints on which requirements you are failing. A
-likely candidate is your iterator not meeting the InputIterator concept.
+likely candidate is your iterator not meeting the
+[InputIterator concept](http://en.cppreference.com/w/cpp/experimental/ranges/iterator/InputIterator)
+([old, but complete documentation](http://en.cppreference.com/w/cpp/concept/InputIterator)).
 
 ## `add_constant_fn`
 
@@ -429,6 +447,8 @@ add_constant_fn constexpr add_constant;
 
 Since the adapter has no state (in contrast to the view it generates), we can make it `constexpr`. You can now use
 the adaptor in the above example.
+
+We are done 😊
 
 Here is the full code: [view_add_constant.cpp](../../view_add_constant.cpp)
 

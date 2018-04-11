@@ -2,10 +2,10 @@
 #include <iostream>
 
 template <typename t>
-using iterator_t = decltype(begin(std::declval<t &>()));
+using iterator_t = decltype(std::begin(std::declval<t &>()));
 
 template <typename t>
-using range_reference_t = decltype(*begin(std::declval<t &>()));
+using range_reference_t = decltype(*std::begin(std::declval<t &>()));
 
 template <typename urng_t>
 //     requires (bool)ranges::InputRange<urng_t>() &&
@@ -24,6 +24,7 @@ private:
     struct iterator_type : iterator_t<urng_t>
     {
         using base = iterator_t<urng_t>;
+        using reference = uint64_t;
 
         iterator_type() = default;
         iterator_type(base const & b) : base{b} {}
@@ -39,7 +40,7 @@ private:
             return (*this);
         }
 
-        uint64_t operator*() const
+        reference operator*() const
         {
             return *static_cast<base>(*this) + 42;
         }
