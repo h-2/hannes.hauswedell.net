@@ -1,7 +1,5 @@
 +++
 title = "Hannes Hauswedell's homepage"
-type = "index"
-
 +++
 
 <center>
