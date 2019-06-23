@@ -56,8 +56,8 @@ some basic routing and VPN, but this had a couple of important drawbacks:
  * I wanted to isolate the ISP-provided router more strongly from the LAN as they have a history of security
    vulnerabilities.
 
-The different off-the-shelf routers I had used over the time also worked only so-so (even those that were customisable) so I decided I needed a proper router.
-Since WiFi access was already out-sourced to dedicated devices I really only needed a filtering device.
+The different off-the-shelf routers I had used over the years had also worked only so-so (even those that were customisable) so I decided I needed a proper router.
+Since WiFi access was already out-sourced to dedicated devices I really only needed a filtering and routing device.
 
 # Hardware
 
@@ -217,4 +217,4 @@ In the OpenVPN profile, under `Hardware Crypto`, you can now select `Intel RDRAN
 
 Take your time to look through the interface! I found some pretty cool things like automatic backup of the configuration to a nextcloud server! The entire config of the firewall rests in one file so it's really easy to setup a clean system from scratch.
 
-All-in-all I am very happy with the system. Even though my setup is non-trivial, with only selected outgoing traffic going through the VPN (based on rules), I never had to get my handy dirty on the command line – everything can be done through the Web-UI.
+All-in-all I am very happy with the system. Even though my setup is non-trivial, with only selected outgoing traffic going through the VPN (based on rules), I never had to get my hands dirty on the command line – everything can be done through the Web-UI.
