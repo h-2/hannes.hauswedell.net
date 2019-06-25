@@ -8,8 +8,8 @@ slug: 24/firewall
 
 fsfe_commentid: 5
 gh_commentid: 5
-<!-- tweetid: -->
-<!-- tootid: -->
+tweetid: 1143170236675440640
+tootid: 102327131742058456
 
 <!-- draft: true -->
 
