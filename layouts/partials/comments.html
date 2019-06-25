@@ -47,7 +47,7 @@
     <div id="fsfe-post-comment-box">
         <a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}#new_comment_field"
            id="fsfe-post-comment"
-           target="_blank">Post comment</a>
+           target="_blank">Post comment</a> via git.fsfe.org (FSFE account required)
         <br>
         <br>
     </div>
@@ -62,6 +62,13 @@
         $("#fsfe-load-comments-box").attr("style", "display:inline");
         // hide non-javascript-button
         $("#fsfe-comments-external-box").attr("style", "display:none");
+
+        // FSFE-gitea comments are loaded automatically:
+        $(document).ready(DoHostedComments("gitea",
+                                           "git.fsfe.org",
+                                           {{ .Site.Params.fsfe_comment_reponame }},
+                                           "fsfe",
+                                           {{ $.Params.fsfe_commentid }}));
     </script>
 {{ end }}
 
@@ -70,8 +77,8 @@
     <div id="gh-comments-list"></div>
     <!--only visible with java-script:-->
     <div id="gh-load-comments-box" style="display:none">
-        <a href="javascript:void(0)" id="gh-load-comments">Load comments ⤓</a>
-        <br>
+        <a href="javascript:void(0)" id="gh-load-comments">Load comments now ⤓</a>
+        (GitHub comments are not loaded automatically)<br>
     </div>
     <!--only visible with java-script (dynamically added when multiple pages):-->
     <a href="javascript:void(0)" id="gh-load-comments-more" class="btn" style="display:none">Load more comments</a>
@@ -86,7 +93,7 @@
     <div id="gh-post-comment-box">
         <a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}#new_comment_field"
            id="gh-post-comment"
-           target="_blank">Post comment</a>
+           target="_blank">Post comment</a> via github.com (GitHub account required)
         <br>
     </div>
 
