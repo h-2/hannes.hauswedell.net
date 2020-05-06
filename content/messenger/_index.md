@@ -5,6 +5,13 @@ title= "Messenger Table"
 type = "index"
 +++
 
+
+---
+
+Attention: this page has not beed updated in a while. It is kept only for archive purposes right now.
+
+---
+
 On this page I try to shed some light on the jungle of mobile messaging apps out there. I have also written blog articles about this:
 <ul>
     <li><a title="Secure Texting and why FSFE cares" href="/post/2014/06/25/secure-texting-and-why-fsfe-cares/" target="_blank">Secure Texting and why FSFE cares</a></li>

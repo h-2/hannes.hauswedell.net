@@ -11,6 +11,9 @@ PygmentsOptions = "linenos=inline"
 
 footnoteReturnLinkContents = "↩"
 
+[markup.goldmark.renderer]
+unsafe= true
+
 [Params]
     gh_comment_reponame = "h-2/blog-comments"
     fsfe_comment_reponame = "h2/blog-comments"
@@ -40,10 +43,16 @@ footnoteReturnLinkContents = "↩"
   url = "/categories/"
 
 [[menu.main]]
-  name = "[messenger table]"
-  weight = 8
-  identifier = "messenger"
-  url = "/messenger/"
+  name = "[publications]"
+  weight = 5
+  identifier = "publications"
+  url = "/publications/"
+
+# [[menu.main]]
+#   name = "[messenger table]"
+#   weight = 8
+#   identifier = "messenger"
+#   url = "/messenger/"
 [[menu.main]]
   name = "[contact]"
   weight = 10
