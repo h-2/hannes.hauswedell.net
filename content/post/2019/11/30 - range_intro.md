@@ -233,6 +233,7 @@ Both take a invocable as argument, e.g. a lambda expression.
 
 <details style='border:1px solid; padding: 2px; margin: 2px'>
   <summary><i>Here is the solution</i></summary>
+
 ```cpp
 std::vector vec{1, 2, 3, 4, 5, 6};
 auto v = vec
