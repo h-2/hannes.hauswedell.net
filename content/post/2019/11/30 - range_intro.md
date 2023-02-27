@@ -244,6 +244,8 @@ std::cout << *v.begin() << '\n'; // prints 4
 ```
 </details>
 
+<br>
+
 ## View concepts
 
 Views are a specific kind of range that is formalised in the `std::ranges::view` concept.

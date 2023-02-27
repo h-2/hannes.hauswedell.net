@@ -40,6 +40,13 @@ This is the first in a series of blog posts describing complete view implementat
 
 <!--more-->
 
+# DISCLAIMER 2023-02-27
+
+**This article does not reflect the final state of ranges and views (although nothing about them is really final as
+they keep changing even within C++20). It likely does not work with current ranges from the standard libary!**
+
+I might write a new post at some point, but the current one is outdated.
+
 # Introduction (skip this if you have used views before)
 
 Ranges are an abstraction of "a collection of items", or "something iterable".
