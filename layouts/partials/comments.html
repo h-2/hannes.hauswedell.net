@@ -107,6 +107,13 @@
         $("#gh-load-comments-box").attr("style", "display:inline");
         // hide non-javascript-button
         $("#gh-comments-external-box").attr("style", "display:none");
+
+        // Github now loaded automatically, too:
+        $(document).ready(DoHostedComments("github",
+                                           "github.com",
+                                           {{ .Site.Params.gh_comment_reponame }},
+                                           "gh",
+                                           {{ $.Params.gh_commentid }}));
     </script>
 {{ end }}
 
