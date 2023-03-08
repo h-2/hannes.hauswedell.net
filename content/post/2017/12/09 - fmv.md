@@ -124,7 +124,9 @@ But how much better is this actually? Compile both versions locally and measure,
 A speed-up of 5x, nice!
 
 <center>
+
 ![](/post/2017/12/happy.png)
+
 </center>
 
 But what happens when the binary is run on a CPU that doesn't have builtin popcnt?
@@ -192,7 +194,9 @@ Ok, we are faster than the original generic code so we are probably using the op
 we are nowhere near our 5x speed-up. What's going on?
 
 <center>
+
 ![](/post/2017/12/hm.png)
+
 </center>
 
 ## Nested function calls
@@ -259,7 +263,9 @@ as a compile-time one.
 Our simplified callgraph for the above cases looks like this (the dotted line is where the dispatching takes place):
 
 <center>
+
 ![](/post/2017/12/graph.png)
+
 </center>
 
 In real world code the graph is of course bigger, but it should become obvious that by moving
@@ -306,7 +312,9 @@ see that the optimised `popcnt` call has disappeared from the assembly and `pc()
 appears once. So in fact our callgraph is (no optimised `pc()` contained):
 
 <center>
+
 ![](/post/2017/12/graph2.png)
+
 </center>
 
 But how serious is this, you may ask? Didn't the compiler inline automatically?

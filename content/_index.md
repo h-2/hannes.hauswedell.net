@@ -3,27 +3,23 @@ title = "Hannes Hauswedell's homepage"
 +++
 
 <!-- <center> -->
-<img src="index.jpg"
-     alt="index.jpg"
+<img src="berg.webp"
+     alt="berg.webp"
      title="When I don't work, I try to spend time outdoors."
      width=400px
      style="text-align: center;
-            border:thin solid white;
-            color: white;
+            border: 5px solid {{ .Site.Params.style.primaryColor }};
+            color: {{ .Site.Params.style.primaryColor }};
             margin:25px;
-            margin-left: auto ;
+            margin-left: 50px ;
             margin-right: auto ;">
 <!-- <img src="" alt="Picture" style="width: 65%;"/> -->
 <!-- </center> -->
 
-Current occupations:
+I am a software engineer and bioinformatician who loves Modern C++, clean code and optimisation.
+I somehow managed to get a doctorate from Freie Universität Berlin and ended up representing Iceland at WG21 (the ISO C++ committee).
+In the past I have also taught programming at university, briefly worked as a consultant and even earlier as a UNIX system administrator.
 
-  * Teaching and research assistant at [Freie Universität Berlin](http://www.mi.fu-berlin.de/en/inf/groups/abi/members/Scientific_Staff/hauswedell.html)
-  * Lead developer of [SeqAn](https://www.seqan.de), the C++ library for biological sequence analysis
-  * Author and developer of [Lambda](https://www.seqan.de/lambda), a protein similarity search tool
-  * Maintainer of a few [FreeBSD packages](http://www.freshports.org/search.php?stype=maintainer&method=exact&query=h2%2Bfbsdports@fsfe.org)
-  * more or less active on: [GitHub](https://github.com/h-2), [twitter](https://twitter.com/__h2__), [mastodon](https://mastodon.social/@__h2__), [ResearchGate](https://www.researchgate.net/profile/Hannes_Hauswedell)
+I [blog](/post) (very) irregularly about various tech topics.
 
-In the past I have also worked as a bioinformatics and C++ consultant and even earlier as a UNIX system adminstrator.
-
-I [blog](/post) irregularly about different tech topics.
+You can find me on several platforms (see the icons on the left) or [write me an e-mail](mailto:h2{æð}fsfe{.}org).
