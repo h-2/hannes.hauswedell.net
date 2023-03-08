@@ -2,10 +2,10 @@
 title = "Hannes Hauswedell's homepage"
 +++
 
-<center>
+<!-- <center> -->
 <img src="index.jpg"
      alt="index.jpg"
-     title="When I don't work I try to spend time outdoors."
+     title="When I don't work, I try to spend time outdoors."
      width=400px
      style="text-align: center;
             border:thin solid white;
@@ -14,7 +14,7 @@ title = "Hannes Hauswedell's homepage"
             margin-left: auto ;
             margin-right: auto ;">
 <!-- <img src="" alt="Picture" style="width: 65%;"/> -->
-</center>
+<!-- </center> -->
 
 Current occupations:
 

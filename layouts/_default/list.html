@@ -12,11 +12,11 @@
         {{ partial "page-summary.html" . }}
     {{ end }}
   {{end}}
-{{ end }}
-{{ define "footer" }}
   {{if eq .Type "index" }}
   {{else}}
     {{ partial "pagination.html" . }}
-  {{end}}
+    {{end}}
+  {{ end }}
+{{ define "footer" }}
   {{ partial "powered-by.html" . }}
 {{ end }}

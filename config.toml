@@ -1,28 +1,69 @@
 baseurl = "https://hannes.hauswedell.net"
 languageCode = "en_GB"
-title = "Hannes Hauswedell's homepage"
-theme = "after-dark"
+title = "Hannes Hauswedell"
+# theme = "after-dark"
+theme = "m10c"
+# theme = "compose"
 copyright = "Unless otherwise noted: text is CC-by-sa; inline code is CC0; pictures are GNU GPL"
 
-PygmentsUseClassic = true
-PygmentsCodeFences = true
-PygmentsUseClasses = true
-PygmentsOptions = "linenos=inline"
+# PygmentsUseClassic = true
+# PygmentsCodeFences = true
+# PygmentsUseClasses = true
+# PygmentsOptions = "linenos=inline"
 
 footnoteReturnLinkContents = "↩"
 
-[markup.goldmark.renderer]
-unsafe= true
+
+
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 1
+  [markup.goldmark.renderer]
+    unsafe= true
+
 
 [Params]
-    gh_comment_reponame = "h-2/blog-comments"
-    fsfe_comment_reponame = "h2/blog-comments"
+  gh_comment_reponame = "h-2/blog-comments"
+  fsfe_comment_reponame = "h2/blog-comments"
+  menu_item_separator = "<br>"
+  author = "Hannes Hauswedell"
+  avatar = "/avatar.jpg"
+  description = "Random thoughts on programming, UNIX and software freedom."
 
-[Author]
-    name = "Hannes Hauswedell"
-    twitter = "__h2__"
-    mastodon_instance = "mastodon.social"
-    mastodon_user = "__h2__"
+[Params.style]
+  darkestColor  = "#242930"
+  darkColor     = "#353b43"
+  lightColor    = "#afbac4"
+  lightestColor = "#ffffff"
+  primaryColor  = "#57cc8a"
+
+[[Params.social]]
+  icon = "github"
+  name = "Github"
+  url = "https://github.com/h-2"
+
+[[Params.social]]
+  icon = "twitter"
+  name = "Twitter"
+  url = "https://twitter.com/__h2__"
+
+[[Params.social]]
+  icon = "mastodon"
+  name = "Mastodon"
+  url = "https://mastodon.social/@__h2__"
+
+[[Params.social]]
+  icon = "linkedin"
+  name = "linkedin"
+  url = "https://www.linkedin.com/in/hannes-hauswedell-b23102194/"
+
+[[Params.social]]
+  icon = "mail"
+  name = "email"
+  url = "mailto:h2{æð}fsfe{.}org"
+
 
 [[menu.main]]
   name = "[about]"

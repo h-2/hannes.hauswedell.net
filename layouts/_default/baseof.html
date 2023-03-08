@@ -1,50 +1,75 @@
-<!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<!doctype html>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}">
   <head>
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} // {{ .Site.Title }}{{ end }}</title>
+    <link rel="shortcut icon" href="{{ .Site.Params.favicon | default "/favicon.ico" }}" />
+    <meta charset="utf-8" />
     {{ hugo.Generator }}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
-    <meta name="keywords" content="{{ if .Keywords }}{{ delimit .Keywords ", " }}{{ else if and .IsPage .Params.tags }}{{ delimit .Params.tags ", " }}{{ else }}{{ range $term, $val := .Site.Taxonomies.categories }}{{ lower (humanize $term) }}, {{ end }}{{ end }}">
-    {{ $default_noindex_kinds := slice "section" "taxonomy" "taxonomyTerm" }}
-    {{ $noindex_kinds := .Site.Params.noindex_kinds | default $default_noindex_kinds }}
-    {{ $is_noindex_true := and (isset .Params "noindex") .Params.noindex }}
-    {{ if or (in $noindex_kinds .Kind) ($is_noindex_true) }}
-      <meta name="robots" content="noindex">
-    {{ end }}
-    {{ partial "meta/name-author.html" . }}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="{{ .Site.Params.author | default "John Doe" }}" />
+    <meta name="description" content="{{ if .IsHome }}{{ .Site.Params.description }}{{ else }}{{ .Description }}{{ end }}" />
+    {{ $style := resources.Get "css/main.scss" | resources.ExecuteAsTemplate "css/main.scss" . | resources.ToCSS | resources.Minify | resources.Fingerprint -}}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
+
+    {{ template "_internal/google_analytics.html" . }}
+    {{ template "_internal/twitter_cards.html" . }}
     {{ template "_internal/opengraph.html" . }}
-    {{ partial "meta/ogimage-maybe.html" . }}
-    {{ partial "meta/theme-color.html" . }}
-    {{ if eq .Kind "home" }}
-      {{ partial "site-verification.html" . }}
-    {{ end }}
-    {{ template "_internal/google_analytics_async.html" . }}
-<!--    {{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}
-    {{ end }}-->
-    <link rel="canonical" href="{{ .Permalink }}">
-    {{ if (isset .Params "prev") }}
-      <link rel="prev" href="{{ .Params.prev }}">
-    {{ end }}
-    {{ if (isset .Params "next") }}
-      <link rel="next" href="{{ .Params.next }}">
-    {{ end }}
-    {{ partial "favicon.html" . }}
-    <style>
-      {{ partial "critical-vendor.css" | safeCSS }}
-      {{ partial "critical-theme.css" | safeCSS }}
-      {{ partial "critical-custom.css" | safeCSS }}
-    </style>
-    {{ $lazylist := findRE "class=\".*?\\blazyload\\b.*?\"|class=lazyload\b" .Content }}<!-- http://regexr.com/3f9d1 -->
-    {{ if ge (len $lazylist) 1 }}
-      <script async src="/js/lazysizes.min.js"></script>
-    {{ end }}
+
   </head>
-  {{ $theme_variant := .Site.Params.theme_variant | default "hack dark" }}
-  <body class="{{ $theme_variant }} main container">
-    <header>{{ block "header" . }}{{ end }}</header>
-    <main>{{ block "main" . }}{{ end }}</main>
-    <footer>{{ block "footer" . }}{{ end }}</footer>
+  <body>
+    <header class="app-header">
+    <style>
+    .app-header-avatar {
+      width: 12rem;
+      height: 12rem;
+      border-radius: 100%;
+      border: 0.5rem solid $primary-color;
+    }
+    </style>
+      <a href="{{ .Site.BaseURL }}"><img class="app-header-avatar" src="{{ .Site.Params.avatar | default "avatar.jpg" | relURL }}" alt="{{ .Site.Params.author | default "John Doe" }}" /></a>
+      <span class="app-header-title">{{ .Site.Title }}</span>
+      {{- with .Site.Menus.main }}
+      <nav class="app-header-menu">
+        {{- range $key, $item := . }}
+          {{- if ne $key 0 }}
+            {{ $.Site.Params.menu_item_separator | default " - " | safeHTML }}
+          {{ end }}
+          <a class="app-header-menu-item" href="{{ $item.URL }}">{{ $item.Name }}</a>
+        {{- end }}
+      </nav>
+      {{- end }}
+      <p>{{ .Site.Params.description | default "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium." }}</p>
+      {{- with .Site.Params.social }}
+      <div class="app-header-social">
+        {{ range . }}
+          <a href="{{ .url }}" target="_blank" rel="noreferrer noopener me">
+            {{ partial "icon.html" (dict "ctx" $ "name" .icon "title" .name) }}
+          </a>
+        {{ end }}
+      </div>
+      {{- end }}
+      {{ if and (gt .WordCount 400 ) (.Params.toc | default true) }}
+        {{ partial "toc.html" . }}
+      {{ end }}
+    </header>
+    <main class="app-container">
+      {{ block "main" . }}
+        {{ .Content }}
+      {{ end }}
+    </main>
+    <style>
+    .app-footer {
+      background: {{ .Site.Params.style.darkestColor }} ;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    </style>
+      <br>
+    <footer class="app-footer">
+      {{ block "footer" . }}
+      {{ end }}
+    </footer>
   </body>
 </html>
