@@ -60,11 +60,17 @@
     <style>
     .app-footer {
       background: {{ .Site.Params.style.darkestColor }} ;
-      text-align: left;
+      text-align: center;
       position: fixed;
       bottom: 0;
       width: 100%;
-      margin-left: 20rem;
+      font-size: 10px;
+    }
+    @media (min-width: 940px) {
+      .app-footer {
+        margin-left: 20rem;
+        text-align: left;
+      }
     }
     </style>
       <br>
