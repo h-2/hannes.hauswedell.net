@@ -24,12 +24,17 @@ paginate = 5
 
 
 [Params]
-  gh_comment_reponame = "h-2/blog-comments"
-  fsfe_comment_reponame = "h2/blog-comments"
   menu_item_separator = "<br>"
   author = "Hannes Hauswedell"
   avatar = "/avatar.jpg"
   description = "Random thoughts on programming, UNIX and software freedom."
+
+[Params.MyParams]
+  twitter_user = "__h2__"
+  mastodon_instance = "mastodon.social"
+  mastodon_user = "__h2__"
+  gh_comment_reponame = "h-2/blog-comments"
+  fsfe_comment_reponame = "h2/blog-comments"
 
 [Params.style]
   darkestColor  = "#242930"

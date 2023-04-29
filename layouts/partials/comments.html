@@ -5,13 +5,13 @@
 {{ end }}
 
 {{ if (.Params.tootid) }}
-<a href="https://{{ .Site.Author.mastodon_instance }}/@{{ .Site.Author.mastodon_user }}/{{ $.Params.tootid }}" target="_blank">
+<a href="https://{{ .Site.Params.MyParams.mastodon_instance }}/@{{ .Site.Params.MyParams.mastodon_user }}/{{ $.Params.tootid }}" target="_blank">
 💬, ❤ or ♺ on Mastodon
 </a><br>
 {{ end }}
 
 {{ if (.Params.tweetid) }}
-<a href="https://twitter.com/{{ .Site.Author.twitter }}/status/{{ $.Params.tweetid }}" target="_blank">
+<a href="https://twitter.com/{{ .Site.Params.MyParams.twitter_user }}/status/{{ $.Params.tweetid }}" target="_blank">
 💬, ❤ or ♺ on Twitter
 </a><br>
 {{ end }}
@@ -26,7 +26,7 @@
 {{ end }}
 
 
-{{ if and (.Site.Params.fsfe_comment_reponame) (.Params.fsfe_commentid) }}
+{{ if and (.Site.Params.MyParams.fsfe_comment_reponame) (.Params.fsfe_commentid) }}
     <h2>Comments (via git.fsfe.org)</h2>
     <div id="fsfe-comments-list"></div>
     <!--only visible with java-script:-->
@@ -38,14 +38,14 @@
     <a href="javascript:void(0)" id="fsfe-load-comments-more" class="btn" style="display:none">Load more comments</a>
     <!--fallback if no javascript available:-->
     <div id="fsfe-comments-external-box">
-        <a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}"
+        <a href="https://git.fsfe.org/{{ .Site.Params.MyParams.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}"
            id="fsfe-comments-external"
            target="_blank">View comments externally</a>
         <br>
     </div>
     <!--always visible-->
     <div id="fsfe-post-comment-box">
-        <a href="https://git.fsfe.org/{{ .Site.Params.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}#new_comment_field"
+        <a href="https://git.fsfe.org/{{ .Site.Params.MyParams.fsfe_comment_reponame }}/issues/{{ $.Params.fsfe_commentid }}#new_comment_field"
            id="fsfe-post-comment"
            target="_blank">Post comment</a> via git.fsfe.org (FSFE account required)
         <br>
@@ -55,7 +55,7 @@
     <script type="text/javascript">
         $("#fsfe-load-comments").attr("onclick", "DoHostedComments(\"gitea\"," +
                                                                   "\"git.fsfe.org\"," +
-                                                                  "\"" + {{ .Site.Params.fsfe_comment_reponame }} + "\"," +
+                                                                  "\"" + {{ .Site.Params.MyParams.fsfe_comment_reponame }} + "\"," +
                                                                   "\"fsfe\", " +
                                                                   {{ $.Params.fsfe_commentid }} + ");");
         // show javascript button
@@ -66,13 +66,13 @@
         // FSFE-gitea comments are loaded automatically:
         $(document).ready(DoHostedComments("gitea",
                                            "git.fsfe.org",
-                                           {{ .Site.Params.fsfe_comment_reponame }},
+                                           {{ .Site.Params.MyParams.fsfe_comment_reponame }},
                                            "fsfe",
                                            {{ $.Params.fsfe_commentid }}));
     </script>
 {{ end }}
 
-{{ if and (.Site.Params.gh_comment_reponame) (.Params.gh_commentid) }}
+{{ if and (.Site.Params.MyParams.gh_comment_reponame) (.Params.gh_commentid) }}
     <h2>Comments (via GitHub)</h2>
     <div id="gh-comments-list"></div>
     <!--only visible with java-script:-->
@@ -84,14 +84,14 @@
     <a href="javascript:void(0)" id="gh-load-comments-more" class="btn" style="display:none">Load more comments</a>
     <!--fallback if no javascript available:-->
     <div id="gh-comments-external-box">
-        <a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}"
+        <a href="https://github.com/{{ .Site.Params.MyParams.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}"
            id="gh-comments-external"
            target="_blank">View comments externally</a>
         <br>
     </div>
     <!--always visible-->
     <div id="gh-post-comment-box">
-        <a href="https://github.com/{{ .Site.Params.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}#new_comment_field"
+        <a href="https://github.com/{{ .Site.Params.MyParams.gh_comment_reponame }}/issues/{{ $.Params.gh_commentid }}#new_comment_field"
            id="gh-post-comment"
            target="_blank">Post comment</a> via github.com (GitHub account required)
         <br>
@@ -100,7 +100,7 @@
     <script type="text/javascript">
         $("#gh-load-comments").attr("onclick", "DoHostedComments(\"github\"," +
                                                                 "\"github.com\"," +
-                                                                "\"" + {{ .Site.Params.gh_comment_reponame }} + "\"," +
+                                                                "\"" + {{ .Site.Params.MyParams.gh_comment_reponame }} + "\"," +
                                                                 "\"gh\", " +
                                                                 {{ $.Params.gh_commentid }} + ");");
         // show javascript button
@@ -111,7 +111,7 @@
         // Github now loaded automatically, too:
         $(document).ready(DoHostedComments("github",
                                            "github.com",
-                                           {{ .Site.Params.gh_comment_reponame }},
+                                           {{ .Site.Params.MyParams.gh_comment_reponame }},
                                            "gh",
                                            {{ $.Params.gh_commentid }}));
     </script>

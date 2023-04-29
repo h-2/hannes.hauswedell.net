@@ -9,8 +9,8 @@ slug: 30/algo_config
 
 fsfe_commentid: 8
 gh_commentid: 8
-tweetid:
-tootid:
+tweetid: 1641800052615049216
+tootid: 110118228359592105
 
 <!-- draft: true -->
 
