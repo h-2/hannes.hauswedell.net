@@ -25,6 +25,45 @@
       border-radius: 100%;
       border: 0.5rem solid $primary-color;
     }
+
+    /*%% This place is completely random, we need a dedicated CSS file*/
+    table {
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-size: 0.9em;
+      min-width: 400px;
+/*       box-shadow: 0 0 20px {{ .Site.Params.style.primaryColor }}88 */
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.65);
+    }
+
+    table, thead tr {
+      background-color: {{ .Site.Params.style.primaryColor }};
+      color: {{ .Site.Params.style.lightestColor }};
+      text-align: left;
+    }
+
+    tr {
+      background-color: {{ .Site.Params.style.darkColor }};
+      color: {{ .Site.Params.style.lightColor }};
+      text-align: left;
+    }
+
+    th, td {
+      padding: 12px 15px;
+    }
+
+/*    tbody tr {
+        border-bottom: 1px solid {{ .Site.Params.style.primaryColor }};
+    }*/
+
+    tbody tr:nth-of-type(even) {
+        background-color: {{ .Site.Params.style.darkestColor }};
+    }
+
+    tbody tr:last-of-type {
+        border-bottom: 2px solid {{ .Site.Params.style.primaryColor }};
+    }
+
     </style>
       <a href="{{ .Site.BaseURL }}"><img class="app-header-avatar" src="{{ .Site.Params.avatar | default "avatar.jpg" | relURL }}" alt="{{ .Site.Params.author | default "John Doe" }}" /></a>
       <span class="app-header-title">{{ .Site.Title }}</span>
