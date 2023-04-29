@@ -27,6 +27,7 @@ paginate = 5
   menu_item_separator = "<br>"
   author = "Hannes Hauswedell"
   avatar = "/avatar.jpg"
+  favicon = "/favicon.png"
   description = "Random thoughts on programming, UNIX and software freedom."
 
 [Params.MyParams]
