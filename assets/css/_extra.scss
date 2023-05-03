@@ -2,48 +2,48 @@
 // This file can be overridden to add project-specific CSS.
 
 
-.post-title-div {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
-  // background-color: green;
+// .post-title-div {
+//   position: -webkit-sticky; /* Safari */
+//   position: sticky;
+//   top: 0;
+//   // background-color: green;
+// }
+
+
+/***************TABLES*************/
+table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+  /*       box-shadow: 0 0 20px $primary-color88 */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.65);
 }
 
+table, thead tr {
+    background-color: $primary-color;
+    color: $lightest-color;
+    text-align: left;
+}
 
-    /***************TABLES*************/
-    table {
-      border-collapse: collapse;
-      margin: 25px 0;
-      font-size: 0.9em;
-      min-width: 400px;
-/*       box-shadow: 0 0 20px $primary-color88 */
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.65);
-    }
+tr {
+    background-color: $dark-color;
+    color: $light-color;
+    text-align: left;
+}
 
-    table, thead tr {
-      background-color: $primary-color;
-      color: $lightest-color;
-      text-align: left;
-    }
-
-    tr {
-      background-color: $dark-color;
-      color: $light-color;
-      text-align: left;
-    }
-
-    th, td {
-      padding: 12px 15px;
-    }
+th, td {
+    padding: 12px 15px;
+}
 
 /*    tbody tr {
-        border-bottom: 1px solid $primary-color;
-    }*/
+    border-bottom: 1px solid $primary-color;
+}*/
 
-    tbody tr:nth-of-type(even) {
-        background-color: $darkest-color;
-    }
+tbody tr:nth-of-type(even) {
+    background-color: $darkest-color;
+}
 
-    tbody tr:last-of-type {
-        border-bottom: 2px solid $primary-color;
-    }
+tbody tr:last-of-type {
+    border-bottom: 2px solid $primary-color;
+}
