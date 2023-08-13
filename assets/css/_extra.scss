@@ -26,6 +26,12 @@ table, thead tr {
     text-align: left;
 }
 
+table, thead code {
+    background-color: $primary-color;
+    color: $lightest-color;
+    text-align: left;
+}
+
 tr {
     background-color: $dark-color;
     color: $light-color;

@@ -102,7 +102,7 @@ function DoHostedComments(type,             // "github" or "gitea"
                     t += "</div></div><br>";
                     $("#" + element_prefix + "-comments-list").append(t);
                 });
-                if ($(comments).size() === 0)
+                if ($(comments).length === 0)
                 {
                     $("#" + element_prefix + "-comments-list").append("<i>Be the first person to comment:</i>");
                 }
