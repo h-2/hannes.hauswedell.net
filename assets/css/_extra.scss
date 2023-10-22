@@ -10,7 +10,13 @@
 // }
 
 
+code {
+    background-color: $darkest-color;
+    padding: 1px 3px;
+}
+
 /***************TABLES*************/
+
 table {
     border-collapse: collapse;
     margin: 25px 0;
@@ -30,6 +36,10 @@ table, thead code {
     background-color: $primary-color;
     color: $lightest-color;
     text-align: left;
+}
+
+table code {
+    background-color: unset;
 }
 
 tr {
