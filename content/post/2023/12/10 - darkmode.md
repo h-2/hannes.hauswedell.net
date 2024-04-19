@@ -10,7 +10,7 @@ slug: 10/darkmode
 fsfe_commentid: 9
 gh_commentid: 9
 tweetid:
-tootid:
+tootid: 111557161908299823
 
 <!-- draft: true -->
 
@@ -51,7 +51,7 @@ And of course, I want the theme switch to be applied immediately and not just on
 
 ## Demo
 
-<video width="960" autoplay="true" loop>
+<video autoplay="true" loop>
   <source src="/post/2023/12/video_small.webm" type="video/webm">
   Your browser does not support the video tag.
 </video>
