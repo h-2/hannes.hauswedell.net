@@ -1,13 +1,13 @@
 ---
 
 author: h2
-date: 2024-04-19 18:30:00+02:00
+date: 2024-04-26 17:00:00+02:00
 
 #title: My slightly overpowered new fileserver
 #title: ZFS NVME Raid with FreeBSD14
-title: A FreeBSD fileserver with a ZFS NVME Raid
+title: A fast fileserver with FreeBSD, NVMEs, ZFS and NFS
 
-slug: 19/fileserver
+slug: 26/fileserver
 
 fsfe_commentid: 10
 gh_commentid: 10
@@ -275,8 +275,8 @@ Compression seems to impact write throughput but not read throughput which is ex
 
 Many optimisation guides suggest setting the zfs `recordsize` to 1 MiB for most use-cases, especially storage of media
 files.
-This seems to drastically penalise random read IOPS while providing little to no benefit in the sequential
-read/write scenarious. This is actually a bit surprising and I will need to investigate this more.
+But this seems to drastically penalise random read IOPS while providing little to no benefit in the sequential
+read/write scenarios. This is actually a bit surprising and I will need to investigate this more.
 Is it perhaps because NVMEs are good at parallel access and therefor suffer less from fragmentation anyway?
 
 In any case, the main take away message is that overall read and
@@ -358,7 +358,6 @@ why it would be slower.
 
 |  IOPS rand-read | IOPS read  | IOPS write | MB/s read | MB/s write | "cat speed" MB/s |
 |----------------:|-----------:|-----------:|----------:|-----------:|-----------------:|
-|                 |     |     |     |        |            |
 |          283    |   292,000  |     33,200 |     1,156 |        594 |          1,164   |
 
 </center>
@@ -370,7 +369,7 @@ On the other hand, the sequential read and write performance is pretty good with
 being very close to the theoretical maximum of the 10GBit connection.
 
 One thing to keep in mind: The blocksize when reading has a very strong impact on the performance. This
-can be seen when using `dd` with differen `bs` arguments. Of course, 1MiB is optimal if that is also used by NFS, and
+can be seen when using `dd` with different `bs` arguments. Of course, 1MiB is optimal if that is also used by NFS, and
 `cat` seems to do this. However, `cp` does not which results in a much slower performance than if using `dd if=.. of=.. bs=1M`.
 
 I have done measurements with plain `nc` over the wire (also reaching 1,160 MiB/s) and `iperf3` which achieves 1,233 MiB/s just below the 1,250 MiB/s equivalent of 10Gbit.
@@ -496,6 +495,8 @@ What a ride! I spent a lot of time optimising and benchmarking this and I am qui
 I am able to exhaust the 10GBit LAN connection completely, and the still have resources left on the server :)
 
 Thanks to the people at www.bsdforen.de who had quite a few helpful suggestions.
+
+If you see anything that I missed, or have suggestions on how to improve this setup, let me know in the comments!
 
 
 ## Footnotes
