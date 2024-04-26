@@ -49,7 +49,9 @@ the slightly overpowered upgrade of the hardware and subsequent performance / po
 
 ## TL;DR
 
-TODO
+* I can fully saturate a 10Gbit LAN connection, achieving more than 1100 MiB/s throughput.
+* I can perform a `zpool scrub` with 11 GiB/s, completing a 6.8TiB scrub in 11min.
+* Idle power usage can be brought down to 34W.
 
 ## Old setup and requirements
 
@@ -63,7 +65,7 @@ What the server does:
 
 Not a lot of compute is necessary, and I have tried to keep power usage low. The old hardware served me well really long:
 
-*  TODO CPU
+* AMD 630 CPU
 * 16GiB RAM
 * 2+1 * 4TiB spinning disk RAIDZ1 with SSD ZIL ("write-cache")
 
@@ -130,7 +132,7 @@ internally share the bandwidth. But for the above board this is not the case.
 
 **Important:** To be able to boot FreeBSD on this board, you need to add the following to `/boot/device.hints`:
 
-```
+```ini
 hint.uart.0.disabled="1"
 hint.uart.1.disabled="1"
 ```
@@ -246,20 +248,39 @@ up your own mind.
 
 <center>
 
-| Disk                       | IOPS rand-read | IOPS read  | IOPS write | MB/s read | MB/s write | "cat speed" MB/s |
-|----------------------------|---------------:|-----------:|-----------:|----------:|-----------:|-----------------:|
-| raidz1                     |       7,235    |   730,000  |    404,000 |     3,686 |      3,548 |           2,142  |
-| raidz1+comp=on             |       7,112    |   800,000  |    470,000 |     3,624 |      3,447 |           2,064  |
-| raidz1+aes128              |       3,259    |   497,000  |    258,000 |     3,029 |      3,422 |           2,227  |
-| raidz1+aes128+comp=on      |       3,697    |   506,000  |    249,000 |     3,137 |      3,361 |           2,237  |
-
+| recordsize | compr. | encrypt |IOPS rand-read | IOPS read  | IOPS write | MB/s read | MB/s write | "cat speed" MB/s |
+|-----------:|-------:|--------:|--------------:|-----------:|-----------:|----------:|-----------:|-----------------:|
+|    128 KiB |    off |     off |     50,000    |   869,000  |    418,000 |     3,964 |      5,745 |            2,019 |
+|    128 KiB |    on  |     off |     49,800    |   877,000  |    458,000 |     3,929 |      4,654 |            1,448 |
+|    128 KiB |    off |  aes128 |     26,300    |   484,000  |    230,000 |     3,589 |      5,331 |            2,142 |
+|    128 KiB |    on  |  aes128 |     27,400    |   501,000  |    228,000 |     3,510 |      3,927 |            2,120 |
 
 </center>
 
-These are the number after creation of the RAIDZ1 based pool. I am not exactly sure what's going on in the first
-column, but since a lot of time passed between this benchmark and the last, I cannot debug the original situation.
-In any case, the main observations can be reproduced: encryption affects IOPS notably, but the overall read and
-write throughputs are over 3,000 MiB/s in the synthetic case and over 2,000 MiB/s in the manual case.
+These are the numbers after creation of the RAIDZ1 based pool. They are quite similar to the numbers measured before.
+The impact of encryption on IOPS is clearly visible, less so on sequential read/write throughput.
+Compression seems to impact write throughput but not read throughput which is expected for `zstd`. It is unclear why
+"cat speed" is lower here.
+
+<center>
+
+| recordsize | compr. | encrypt |IOPS rand-read | IOPS read  | IOPS write | MB/s read | MB/s write | "cat speed" MB/s |
+|-----------:|-------:|--------:|--------------:|-----------:|-----------:|----------:|-----------:|-----------------:|
+|      1 MiB |    off |     off |       7,235   |   730,000  |    404,000 |     3,686 |      3,548 |           2,142  |
+|      1 MiB |    on  |     off |       7,112   |   800,000  |    470,000 |     3,624 |      3,447 |           2,064  |
+|      1 MiB |    off |  aes128 |       3,259   |   497,000  |    258,000 |     3,029 |      3,422 |           2,227  |
+|      1 MiB |    on  |  aes128 |       3,697   |   506,000  |    249,000 |     3,137 |      3,361 |           2,237  |
+
+</center>
+
+Many optimisation guides suggest setting the zfs `recordsize` to 1 MiB for most use-cases, especially storage of media
+files.
+This seems to drastically penalise random read IOPS while providing little to no benefit in the sequential
+read/write scenarious. This is actually a bit surprising and I will need to investigate this more.
+Is it perhaps because NVMEs are good at parallel access and therefor suffer less from fragmentation anyway?
+
+In any case, the main take away message is that overall read and
+write throughputs are over 3,000 MiB/s in the synthetic case and over 2,000 MiB/s in the manual case, which is great.
 
 ### Other disk performance metrics
 
@@ -307,19 +328,52 @@ the CAT cable for the device to go UP), and it used more energy than the X540, s
 
 
 
-### Performance
+### NFS Performance
+
+On server and client, I set:
+* `kern.ipc.maxsockbuf=4737024` in `/etc/sysctl.conf`
+* `mtu 9000 media 10gbase-t` in the `/etc/rc.conf` (ifconfig)
+
+Only on the server:
+* `nfs_server_maxio="1048576"` in `/etc/rc.conf`
+
+Only on the client:
+* `nfsv4,nconnect=8,readahead=8` as the mount options for the nfs mount.
+* `vfs.maxbcachebuf=1048576` in `/boot/loader.conf`  (not sure any more if this makes a difference).
+
+These settings allow larger buffers and increase the amount of readahead. This favours large sequential reads/writes over small random reads/writes.
+
+The full options on the client end up being:
+
+```txt
+# nfsstat -m
+X.Y.Z.W:/ on /mnt/server
+nfsv4,minorversion=2,tcp,resvport,nconnect=8,hard,cto,sec=sys,acdirmin=3,acdirmax=60,acregmin=5,acregmax=60,nametimeo=60,negnametimeo=60,rsize=1048576,wsize=1048576,readdirsize=1048576,readahead=8,wcommitsize=16777216,timeout=120,retrans=2147483647
+```
+
+I use NFS4 for my workstation and NFS3 for everyone else. I have performed no benchmarks on NFS3, but I see no reason
+why it would be slower.
 
 <center>
 
-| Reading on the client via                            | Speed [MiB/s] |
-|------------------------------------------------------|--------------:|
-| iperf3                                               |       1,233   |
-| `nc > /dev/null`                                     |       1,160   |
-| NFS (`cat > /dev/null`)                              |               |
+|  IOPS rand-read | IOPS read  | IOPS write | MB/s read | MB/s write | "cat speed" MB/s |
+|----------------:|-----------:|-----------:|----------:|-----------:|-----------------:|
+|                 |     |     |     |        |            |
+|          283    |   292,000  |     33,200 |     1,156 |        594 |          1,164   |
 
 </center>
 
-TODO fio over nfs
+This benchmark was performed on a dataset with 1M recordsize, encryption, but no compression.
+Random read IOPS are pretty bad, and I see a strong correlation here to the `rsize` (if I halve it, I double the IOPS; not shown in table).
+It's possible that every 4KiB read actually triggers a 1MiB read in NFS which would explain this.
+On the other hand, the sequential read and write performance is pretty good with synthetic and real world read speeds
+being very close to the theoretical maximum of the 10GBit connection.
+
+One thing to keep in mind: The blocksize when reading has a very strong impact on the performance. This
+can be seen when using `dd` with differen `bs` arguments. Of course, 1MiB is optimal if that is also used by NFS, and
+`cat` seems to do this. However, `cp` does not which results in a much slower performance than if using `dd if=.. of=.. bs=1M`.
+
+I have done measurements with plain `nc` over the wire (also reaching 1,160 MiB/s) and `iperf3` which achieves 1,233 MiB/s just below the 1,250 MiB/s equivalent of 10Gbit.
 
 ## Power consumption and thermals
 
@@ -393,7 +447,7 @@ Since this puts stress on the NVMEs and also the CPUs, it should be at least ind
 The power usage fluctuates **between 85W and 98W.** I think all of these values are acceptable.
 
 
-#### NVME tuning
+<!--#### NVME tuning-->
 
 <center>
 
@@ -408,10 +462,10 @@ The power usage fluctuates **between 85W and 98W.** I think all of these values 
 You can use `nvmecontrol` to tell the NVME disks to save energy. More information on this [here](https://nvmexpress.org/resource/technology-power-features/)
 and [here](https://www.truenas.com/community/threads/nvme-autonomous-power-state-transition-apst-not-working-in-core-works-in-scale.113947/).
 I was surprised that all of this works reliably on FreeBSD, but it does! The man-page is not great though. Simply
-call `nvmecontrol power -p X nvmeYns1` to set the hint to Y on device X. Note that this needs to be repeated after
+call `nvmecontrol power -p X nvmeYns1` to set the hint to X on device Y, if desired. Note that this needs to be repeated after
 every reboot.
 
-#### CPU tuning
+<!--#### CPU tuning-->
 
 <center>
 
@@ -425,20 +479,23 @@ every reboot.
 You can use the `dev.hwpstate_intel.*.epp` sysctls for you cores to tune the eagerness of that core to scale up with
 higher number meaning less eagerness.
 
-#### Summary
+<!--#### Summary-->
 
-I decided not to apply any of these optimisations.
-Optimising power usage under load is just very difficult, because, as shown, all optimisations that reduce watts per time also increase time.
+I decided not to apply any of these "under load optimisations".
+It is just very difficult, because, as shown, all optimisations that reduce watts per time also increase time.
 I am not certain of any good ways to quantify this, but it feels like keeping the system at 70W for 30min instead of 100W for 10min, is not really worth it.
-And I kind of also want the system to be fast, that's why I spent so much money on it!
+And I kind of also want the system to be fast, that's why I spent so much money on it 🙃
 
-The CPU also has a cTDP mode that can be activated via the BIOS and which is "worth it", according to some articles
+The CPU does have a cTDP mode that can be activated via the BIOS and which is "worth it", according to some articles
 I have read. I might give this a try in the future.
 
 
-## Price
-
 ## Final remarks
+
+What a ride! I spent a lot of time optimising and benchmarking this and I am quite happy with the outcome.
+I am able to exhaust the 10GBit LAN connection completely, and the still have resources left on the server :)
+
+Thanks to the people at www.bsdforen.de who had quite a few helpful suggestions.
 
 
 ## Footnotes
