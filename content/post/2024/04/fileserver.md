@@ -1,7 +1,7 @@
 ---
 
 author: h2
-date: 2024-04-26 17:00:00+02:00
+date: 2024-04-26 16:30:00+02:00
 
 #title: My slightly overpowered new fileserver
 #title: ZFS NVME Raid with FreeBSD14
@@ -43,7 +43,7 @@ tags:
 ---
 
 I have a small server running in my flat that serves files locally via NFS and remotely via Nextcloud. This post documents
-the slightly overpowered upgrade of the hardware and subsequent performance / power optimisations.
+the slightly overpowered upgrade of the hardware and subsequent performance / efficiency optimisations.
 
 <!--more-->
 
@@ -480,7 +480,7 @@ higher number meaning less eagerness.
 
 <!--#### Summary-->
 
-I decided not to apply any of these "under load optimisations".
+In the end, **I decided not to apply any of these "under load optimisations".**
 It is just very difficult, because, as shown, all optimisations that reduce watts per time also increase time.
 I am not certain of any good ways to quantify this, but it feels like keeping the system at 70W for 30min instead of 100W for 10min, is not really worth it.
 And I kind of also want the system to be fast, that's why I spent so much money on it 🙃
@@ -492,7 +492,7 @@ I have read. I might give this a try in the future.
 ## Final remarks
 
 What a ride! I spent a lot of time optimising and benchmarking this and I am quite happy with the outcome.
-I am able to exhaust the 10GBit LAN connection completely, and the still have resources left on the server :)
+I am able to exhaust the 10GBit LAN connection completely, and still have resources left on the server :)
 
 Thanks to the people at www.bsdforen.de who had quite a few helpful suggestions.
 
