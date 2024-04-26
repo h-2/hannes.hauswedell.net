@@ -5,7 +5,7 @@ date: 2024-04-19 18:30:00+02:00
 
 #title: My slightly overpowered new fileserver
 #title: ZFS NVME Raid with FreeBSD14
-title: New FreeBSD fileserver with ZFS NVME Raid
+title: A FreeBSD fileserver with a ZFS NVME Raid
 
 slug: 19/fileserver
 
@@ -35,6 +35,9 @@ tags:
 - NFS
 - 10GBase-T
 - 10gbit
+- Lexar
+- Crucial
+- Benchmark
 
 
 ---
@@ -125,7 +128,7 @@ was also a requirement.
 It is important to check whether PCIe slots can still be used when all NVME slots are occupied; sometimes they
 internally share the bandwidth. But for the above board this is not the case.
 
-**Important:** To be able to boot FreeBSD from this board, you need to add the following to `/boot/device.hints`:
+**Important:** To be able to boot FreeBSD on this board, you need to add the following to `/boot/device.hints`:
 
 ```
 hint.uart.0.disabled="1"
@@ -163,7 +166,7 @@ covers spikes well above 100W, so I just chose the cheapest 300W one I could get
 </center>
 
 
-The built in fans are very noise. I chose to replace one of the intake fans with a spare one I had lying around and
+The built in fans are very noisy. I chose to replace one of the intake fans with a spare one I had lying around and
 only connect one of the rear outtake fans. But I added an extra fan where the extension slots are to divert some
 airflow around the NIC—which otherwise gets quite warm. This should also blow some air over the NVME heatsinks!
 All fans can be regulated and fine-tuned from the BIOS of the mainboard which I totally recommend you do. At the current
@@ -256,7 +259,7 @@ up your own mind.
 These are the number after creation of the RAIDZ1 based pool. I am not exactly sure what's going on in the first
 column, but since a lot of time passed between this benchmark and the last, I cannot debug the original situation.
 In any case, the main observations can be reproduced: encryption affects IOPS notably, but the overall read and
-write throughputs are over 3,000 MiB/s in the synthetic case and over 2,000 MiB/s in the manual test.
+write throughputs are over 3,000 MiB/s in the synthetic case and over 2,000 MiB/s in the manual case.
 
 ### Other disk performance metrics
 
@@ -297,7 +300,6 @@ a switch with two 10GBase-T ports which I had bought for exactly this setup.
 The cheapest Intel 10GBase-T card out there is the X540 which is quite old and available on Amazon for around 80€.
 I bought two of those (one for the server and one for the workstation). More modern cards are supposedly more energy
 efficient, but also a lot more expensive.[^5]
-
 
 [^5]: I did try a slightly more more modern adapter with Intel 82599EN chip. This is a SFP+ chip, but I found an
 adaptor with built-in 10GBase-T for around 150€. It ended up having some driver issues (you needed to plug and unplug
@@ -342,22 +344,24 @@ Because the computer is idle most of the time, optimising idle power usage is mo
 
 </center>
 
+I assume that the same setup on Linux would be slightly more efficient, but 34W in idle is acceptable.
+
 Clearly, the most impactful changes were:
 
 1. Activating [ASPM](https://en.wikipedia.org/wiki/Active_State_Power_Management) for the PCIe devices in the BIOS.
 2. Adding `performance_cx_lowest="Cmax"` and `economy_cx_lowest="Cmax"` to `/etc/rc.conf`.
 3. Adding `machdep.hwpstate_pkg_ctrl=0` to `/boot/loader.conf`.
 
-You can find online resources on what these options do! You might need to update the BIOS to be able to disable
+You can find online resources on what these options do. You might need to update the BIOS to be able to disable
 WiFi and Bluetooth devices completely. You can also use hints in the `/boot/device.hints`, but this doesn't save
 as much power.
 
-Using 10GBase-T speed on the network device (instead of 1GBase-T) unfortunately increases power usage notably, but
+Using 10GBase-T speed on the network device (instead of 1000Base-T) unfortunately increases power usage notably, but
 there is nothing I could find to mitigate this.
 
 Things that are often recommended but that did not help me (at least not in idle):
 * NVME power states (more on this below)
-* lower values for `sysctl dev.hwpstate_intel.*.epp`
+* lower values for `sysctl dev.hwpstate_intel.*.epp` (more on this below)
 * `hw.pci.do_power_nodriver=3`
 
 <center>
@@ -403,16 +407,20 @@ The power usage fluctuates **between 85W and 98W.** I think all of these values 
 
 You can use `nvmecontrol` to tell the NVME disks to save energy. More information on this [here](https://nvmexpress.org/resource/technology-power-features/)
 and [here](https://www.truenas.com/community/threads/nvme-autonomous-power-state-transition-apst-not-working-in-core-works-in-scale.113947/).
-I was surprised that all of the is works reliably on FreeBSD, but it does! The man-page is not great though. Simply
+I was surprised that all of this works reliably on FreeBSD, but it does! The man-page is not great though. Simply
 call `nvmecontrol power -p X nvmeYns1` to set the hint to Y on device X. Note that this needs to be repeated after
 every reboot.
 
 #### CPU tuning
 
+<center>
+
 | `dev.hwpstate_intel.*.epp` | scrub speed GiB/s  | W/h   |
 | ---------------------------|-------------------:|------:|
 | 50 (default)               |               11.0 | < 100 |
 | 100                        |                3.3 |  < 60 |
+
+</center>
 
 You can use the `dev.hwpstate_intel.*.epp` sysctls for you cores to tune the eagerness of that core to scale up with
 higher number meaning less eagerness.
@@ -421,11 +429,11 @@ higher number meaning less eagerness.
 
 I decided not to apply any of these optimisations.
 Optimising power usage under load is just very difficult, because, as shown, all optimisations that reduce watts per time also increase time.
-I am not sure of any good ways to quantify this, but it feels like keeping the system in at 70W for 30min instead of 100W for 10min, is not really worth it.
+I am not certain of any good ways to quantify this, but it feels like keeping the system at 70W for 30min instead of 100W for 10min, is not really worth it.
 And I kind of also want the system to be fast, that's why I spent so much money on it!
 
-The CPU also had a cTDP mode that can be activated via the BIOS and which is "worth it", according to some articles
-I have read. I might give this a chance in the future.
+The CPU also has a cTDP mode that can be activated via the BIOS and which is "worth it", according to some articles
+I have read. I might give this a try in the future.
 
 
 ## Price
