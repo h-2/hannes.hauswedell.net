@@ -12,7 +12,7 @@ slug: 26/fileserver
 fsfe_commentid: 10
 gh_commentid: 10
 tweetid:
-tootid:
+tootid: 112338120856824951
 
 <!-- draft: true -->
 
@@ -114,7 +114,7 @@ interface add further complications.
 In the end, I decided to not do any experiments and look for a board that natively supports a high number of NVME slots.
 For some reasons, this feature is very rare on AMD mainboards, so I switched to Intel (although actually I am a bit of
 an AMD fanboy). I probably could have gone with a board that has 5 slots, but I use hardware for a long time and wanted
-to be safe, so I took board that has 6 NVME slots:
+to be safe, so I took board that has 6 NVME slots (2 free slots):
 
 
 <center>
