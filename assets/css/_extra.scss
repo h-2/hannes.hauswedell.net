@@ -73,3 +73,25 @@ tbody tr:nth-of-type(even) {
 tbody tr:last-of-type {
     border-bottom: 2px solid $primary-color;
 }
+
+
+/***************COLUMN LAYOUT*************/
+
+.two_columns {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+     /* default 0 */
+    // grid-template-columns: 2;
+    // grid-template-rows: 1;
+}
+
+// .two_columns_item {
+//     // flex-grow: 2; /* default 0 */
+//     // flex-shrink: 2; /* default 0 */
+//     flex: 5;
+// }
+
+.two_columns div {
+    flex: 5;
+}
