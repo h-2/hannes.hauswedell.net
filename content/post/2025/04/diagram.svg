@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="110.92818mm"
+   height="59.544941mm"
+   viewBox="0 0 110.92818 59.544941"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   sodipodi:docname="diagram.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="3.5919192"
+     inkscape:cx="42.595613"
+     inkscape:cy="136.27812"
+     inkscape:window-width="3436"
+     inkscape:window-height="1394"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showgrid="true">
+    <inkscape:grid
+       id="grid4"
+       units="mm"
+       originx="-44.834343"
+       originy="-116.86967"
+       spacingx="0.26458333"
+       spacingy="0.26458334"
+       empcolor="#0000ff"
+       empopacity="0.25098039"
+       color="#0000ff"
+       opacity="0.1254902"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="ConcaveTriangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Concave triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path7" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-44.834342,-116.86967)">
+    <ellipse
+       style="opacity:0.3;fill:#57cc8a;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.250545;stroke-linejoin:bevel"
+       id="path1"
+       cx="139.57683"
+       cy="-85.015381"
+       rx="17.86001"
+       ry="39.991684"
+       transform="rotate(90)" />
+    <ellipse
+       style="opacity:0.3;fill:#57cc8a;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.172602;stroke-linejoin:bevel"
+       id="path1-8"
+       cx="139.57683"
+       cy="-72.08857"
+       rx="12.477324"
+       ry="27.167927"
+       transform="rotate(90)" />
+    <ellipse
+       style="opacity:0.3;fill:#57cc8a;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.330986;stroke-linejoin:bevel"
+       id="path1-2"
+       cx="139.57683"
+       cy="-100.29843"
+       rx="22.54167"
+       ry="55.298595"
+       transform="rotate(90)" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.29167px;line-height:6.61458px;font-family:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;white-space:pre;inline-size:58.1062;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="56.86607"
+       y="131.41071"
+       id="text2"
+       transform="translate(15.222358,6.0977116)"><tspan
+         x="56.86607"
+         y="131.41071"
+         id="tspan1">borrowed
+</tspan><tspan
+         x="56.86607"
+         y="138.02528"
+         id="tspan6">ranges</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.29167px;line-height:6.61458px;font-family:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="111.50284"
+       y="140.07637"
+       id="text3"><tspan
+         sodipodi:role="line"
+         id="tspan3"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583px"
+         x="111.50284"
+         y="140.07637">views</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.29167px;line-height:6.61458px;font-family:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffffff;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="139.74582"
+       y="139.84535"
+       id="text4"><tspan
+         sodipodi:role="line"
+         id="tspan4"
+         style="fill:#ffffff;stroke:none;stroke-width:0.264583px"
+         x="139.74582"
+         y="139.84535">ranges</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#afbac4;stroke-width:0.248006;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#ConcaveTriangle)"
+       d="M 52.614054,170.67187 H 146.42037"
+       id="path4" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:4.40972px;font-family:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="100.29929"
+       y="175.6808"
+       id="text5"><tspan
+         sodipodi:role="line"
+         id="tspan5"
+         style="font-size:3.52778px;line-height:4.40972px;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+         x="100.29929"
+         y="175.6808">state stored in range</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:4.40972px;font-family:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="72.022255"
+       y="169.16034"
+       id="text5-0"><tspan
+         sodipodi:role="line"
+         id="tspan5-0"
+         style="font-size:3.52778px;line-height:4.40972px;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+         x="72.022255"
+         y="169.16034">none</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:4.40972px;font-family:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="111.50499"
+       y="169.30331"
+       id="text5-0-1"><tspan
+         sodipodi:role="line"
+         id="tspan5-0-3"
+         style="font-size:3.52778px;line-height:4.40972px;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+         x="111.50499"
+         y="169.30331">O(1)</tspan></text>
+    <g
+       id="g1"
+       transform="translate(68.226051,0.14297156)">
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:4.40972px;font-family:'Bitstream Vera Sans';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="71.683411"
+         y="169.16034"
+         id="text5-0-0"><tspan
+           sodipodi:role="line"
+           id="tspan5-0-8"
+           style="font-size:3.52778px;line-height:4.40972px;fill:#afbac4;fill-opacity:1;stroke:none;stroke-width:0.264583px"
+           x="71.683411"
+           y="169.16034">O(n)</tspan></text>
+    </g>
+  </g>
+</svg>
