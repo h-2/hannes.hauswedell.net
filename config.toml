@@ -12,7 +12,7 @@ copyright = "Unless otherwise noted: text is CC-by-sa; inline code is CC0; pictu
 # PygmentsOptions = "linenos=inline"
 
 footnoteReturnLinkContents = "↩"
-paginate = 5
+# paginate = 5
 
 [markup]
   [markup.tableOfContents]
